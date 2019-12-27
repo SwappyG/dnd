@@ -65,6 +65,8 @@ def makeCharacter(library, i):
                 selected_options[option_uuid].append(option_dict['feature_uuids'][ii])
 
         character.IncrementLevel(library, selected_options)
+    character._learned_features = [''.join([c for c in str(feature) if c.isalpha()])[:6] for feature in character._learned_features]
+    
     return character
 
 library = makeLibrary()
