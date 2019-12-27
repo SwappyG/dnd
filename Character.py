@@ -9,10 +9,11 @@ class Character(object):
 
     stat_buff_levels = [4,8,12,16,19]
 
-    def __init__(self, name, job, age, alignment, stats):
+    def __init__(self, name, job, age, gender, alignment, stats):
         self._name = name
         self._job = job
-        self._age = age
+        self._age = str(age)
+        self._gender = gender
         self._level = 0
         self._alignment = alignment # string
         self._learned_features = [] # name strings
@@ -25,7 +26,7 @@ class Character(object):
             print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
             return False
         
-        if item in self._inventory:
+        if item_name in self._inventory:
             self._inventory[item_name] += quantity
             return True
 
@@ -36,7 +37,7 @@ class Character(object):
     def RemoveFromInventory(self, item_name, quantity = None):
         if item_name in self._inventory:
             if (quantity == None):
-                self._inventory.pop(item)
+                self._inventory.pop(item_name)
                 return True
 
             if quantity < 0:
@@ -127,6 +128,12 @@ class Character(object):
 
     def GetJobName(self):
         return self._job.GetName()
+
+    def GetAge(self):
+        return self._age
+    
+    def GetGender(self):
+        return self._gender
 
     def GetLevel(self):
         return self._level
