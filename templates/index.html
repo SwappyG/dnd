@@ -114,73 +114,67 @@
                     </div>
                     <div class="col-10">
                         <div class="row">
-                            <div class="container" id="playerinfo">
-                                <button class="btn btn-secondary dropdown" aria-expanded="false" aria-controls="equiped" data-toggle="collapse" data-target="#equiped" data-parent="#playerinfo">Equiped</button>
-                            <button class="btn btn-secondary dropdown" aria-expanded="false" aria-controls="inventory" data-toggle="collapse" data-target="#inventory" data-parent="#playerinfo">Inventory</button>
-                            <div class="accordion-group">
-                                <div class="collapse indent" id="equiped" data-parent="#playerinfo">
-                                    <div class="row overflow-auto mt-2" style="height: 150px !important;">
-                                        <div class="col">
-                                            {%for item in character.GetEquipedItems() %} 
-                                                <div class="row">
-                                                    <div class="col-9">
-                                                        <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
-                                                    </div>
-                                                    <div class="col text-center">
-                                                        <h6>
-                                                            <i class="fa fa-chevron-left fa-2"></i>
-                                                            {{character.GetEquipedItems()[item]}}
-                                                            <i class="fa fa-chevron-right fa-2"></i>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            {%endfor%}
+                            <div class="btn-group" role="group" aria-label="playerinfo">
+                                <button class="btn btn-secondary ml-3 mr-1" aria-expanded="true" data-toggle="collapse" data-target="#equiped">Equiped</button>
+                                <button class="btn btn-secondary" aria-expanded="false" data-toggle="collapse" data-target="#inventory">Inventory</button>
+                              </div>
+                        </div>
+                        <div class="row overflow-auto mt-2" style="height: 150px;" id="playerinfo">
+                            <div class="col accordian-group">
+                                <div class="collapse show" id="equiped" data-parent="#playerinfo">
+                                    {%for item in character.GetEquipedItems() %} 
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6>
+                                                    <i class="fa fa-chevron-left fa-2"></i>
+                                                    {{character.GetEquipedItems()[item]}}
+                                                    <i class="fa fa-chevron-right fa-2"></i>
+                                                </h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {%endfor%}
                                 </div>
                                 <div class="collapse" id="inventory" data-parent="#playerinfo">
-                                    <div class="row overflow-auto mt-2" style="height: 150px !important;">
-                                        <div class="col">
-                                            {%for item in character.GetInventory() %} 
-                                                <div class="row">
-                                                    <div class="col-9">
-                                                        <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
-                                                    </div>
-                                                    <div class="col text-center">
-                                                        <h6>
-                                                            <i class="fa fa-chevron-left fa-2"></i>
-                                                            {{character.GetInventory()[item]}}
-                                                            <i class="fa fa-chevron-right fa-2"></i>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            {%endfor%}
+                                    {%for item in character.GetInventory() %} 
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6>
+                                                    <i class="fa fa-chevron-left fa-2"></i>
+                                                    {{character.GetInventory()[item]}}
+                                                    <i class="fa fa-chevron-right fa-2"></i>
+                                                </h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {%endfor%}
                                 </div>
                             </div>
-                        </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-4">
-                                <div class="row">
-                                    <div class="col">
-                                        <h2>Features</h2>
-                                    </div>
-                                </div>
-                                <div class="row overflow-auto" style="height: 150px !important;">
-                                    <div class="col">
-                                        <h6>Feature Name</h6>
-
-                                    </div>
-                                </div> 
+                                <h2>Features</h2>
                             </div>
-                            <div class="col-8">
-                                <div class="row">
-                                    <h2 style="color: white;">Description</h2>
-                                </div>
-                                <div class="row">
-                                    <p>description</p>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-3 overflow-auto" style="height: 150px;">
+                                {%for feature in character.GetLearnedFeatures()%}
+                                    <h6 aria-expanded="false" data-toggle="collapse" data-target="#{{feature}}">{{feature}}</h6>
+                                {%endfor%}
+                            </div>
+                            <div class="col-9">
+                                <div class="row" id="featureinfo" style="height: 150px;">
+                                    <div class="col accordian-group">
+                                        {%for feature in character.GetLearnedFeatures()%}
+                                            <div class="collapse" id="{{feature}}" data-parent="#featureinfo">
+                                                <h6>{{feature}}</h6>
+                                            </div>
+                                        {%endfor%}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -218,9 +212,8 @@
             
         </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js" integrity="sha256-DqUEt+3/iNJv2Kj9c+M7apLvAYr84YxGKmGa6qBa9Kc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js" integrity="sha256-66f6uQTQkvHF8jpniLWJjnteEfmQaC/tATFew/nTBA8=" crossorigin="anonymous"></script>
 </body>
 </html>
