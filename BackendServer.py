@@ -1,6 +1,7 @@
 import Importer
 from Character import Character
 from Library import Library
+from pprint import pprint
 
 class Game(object):
     def __init__(self):
@@ -52,6 +53,7 @@ class Game(object):
                 selected_options[option_uuid].append(option_dict['feature_uuids'][ii])
 
         self._characters[name].IncrementLevel(library, selected_options)
+        return self._characters[name].GetLevel(), self._characters[name].GetLearnedFeatures()
 
 
 class BackendServer(object):
@@ -84,6 +86,7 @@ class BackendServer(object):
     def AddToInventory(self, character_name, item_name, value):
         if self._game.AddToInventory(character_name, item_name, value):
             self._context['characters'][character_name]['inventory'] = self._game.GetInventory(character_name)
+            pprint(self._context['characters'][character_name]['inventory'])
             return True
         return False
 
@@ -115,6 +118,7 @@ class BackendServer(object):
 
         # Create the dict for front end
         this_character_dict = {}
+        this_character_dict['name'] = name
         this_character_dict['level'] = this_character.GetLevel()
         this_character_dict['age'] = this_character.GetAge()
         this_character_dict['equiped'] = this_character.GetEquipedItems()
@@ -139,7 +143,17 @@ class BackendServer(object):
         return True
 
     def IncrementLevel(self, name):
-        self._game.IncrementLevel(name, self._library)
+        level, learned_features = self._game.IncrementLevel(name, self._library)
+        
+        self._context['characters'][name]['learned_features'] = {}
+        for feature_uuid in learned_features: 
+            feature = self._library.Get('features', feature_uuid)
+            learned_feature = {}
+            learned_feature['name'] = feature.GetName()
+            learned_feature['description'] = feature.GetDescription()
+            self._context['characters'][name]['learned_features'][''.join([c for c in str(feature_uuid) if c.isalpha()][:6])] = learned_feature
+
+        self._context['characters'][name]['level'] = level
 
     def GetContext(self):
         return self._context

@@ -52,6 +52,10 @@ def makeCharacter(server, i):
     server.Equip('Ace' + str(i), 'loves', 1)
     server.Equip('Ace' + str(i), 'Pants', 1)
     server.Equip('Ace' + str(i), 'Shirt', 1)
+    server.IncrementLevel('Ace' + str(i))
+    server.IncrementLevel('Ace' + str(i))
+    server.IncrementLevel('Ace' + str(i))
+
 
 from BackendServer import BackendServer
 
@@ -61,6 +65,40 @@ for i in range(3):
 
 @app.route('/', methods=['GET'])
 def index():
+    return render_template('index.html', context=server.GetContext())
+
+@app.route('/character', methods=['GET', 'POST'])
+def character():
+    character_name = request.form.get('currcharacter')
+
+    server.GetContext()['curr_character'] = server.GetContext()['characters'][character_name]
+    return render_template('index.html', context=server.GetContext())
+
+@app.route('/character/inventory', methods=['GET', 'PUT'])
+def inventory():
+    character_name = server.GetContext()['curr_character']['name']
+    item_name = request.args.get('item')
+    action = request.args.get('action')
+    if action == 'decrement':
+        server.RemoveFromInventory(character_name, item_name, 1)
+    else:
+        server.AddToInventory(character_name, item_name, 1)
+    server.GetContext()['curr_character'] = server.GetContext()['characters'][character_name]
+    return render_template('index.html', context=server.GetContext())
+
+@app.route('/character/equiped', methods=['GET', 'PUT'])
+def equiped():
+    character_name = server.GetContext()['curr_character']['name']
+    item_name = request.args.get('item')
+    action = request.args.get('action')
+    print(character_name, item_name, action)
+    if action == 'decrement':
+        print('decrementing')
+        server.RemoveFromInventory(character_name, item_name, 1)
+    else:
+        server.AddToInventory(character_name, item_name, 1)
+
+    server.GetContext()['curr_character'] = server.GetContext()['characters'][character_name]
     return render_template('index.html', context=server.GetContext())
 
 @app.route('/import', methods=['GET', 'PUT'])

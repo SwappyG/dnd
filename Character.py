@@ -4,6 +4,7 @@ from Job import Job
 from Item import Item
 
 from copy import deepcopy
+from pprint import pprint
 
 class Character(object):
 
@@ -39,12 +40,13 @@ class Character(object):
         self.SetHP(self.GetHP()) # make sure current HP is clipped to be between 0 and max
 
     def AddToInventory(self, item_name, quantity):
+        print ("adding quantity <{}> to item <{}>".format(quantity, item_name))
         if item_name in self._inventory:
             if quantity >= 0:
                 self._inventory[item_name] += quantity
+                pprint(self._inventory)
                 return True
 
-            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
             return False 
         else:
             if quantity >= 0:
