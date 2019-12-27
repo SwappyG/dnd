@@ -71,6 +71,10 @@ library = makeLibrary()
 characters = [makeCharacter(library, i) for i in range(3)]
 character = characters[0]
 
+from BackendServer import BackendServer
+
+server = BackendServer()
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html', characters=characters, character=character)
@@ -78,22 +82,10 @@ def index():
 @app.route('/import', methods=['GET', 'PUT'])
 def importFile():
     filename = request.args.get("importfile")
-    type = request.args.get("type")
-    if type == 'effects':
-        effects = Importer.ImportEffects(filename)
-        library.AddDict('effects', effects)
-    elif type == 'features':
-        features = Importer.ImportFeatures(filename, library)
-        library.AddDict('features', features)
-    elif type == 'options':
-        options = Importer.ImportOptions(filename, library)
-        library.AddDict('options', options)
-    elif type == 'jobs':
-        jobs = Importer.ImportOptions(filename, library)
-        library.AddDict('jobs', jobs)
-    elif type == 'items':
-        pass
-    return render_template('index.html', characters=characters, character=character)
+    dict_type = request.args.get("type")
+
+    server.ImportToLibrary(dict_type, filename):
+    return render_template('index.html', context=server.GetContext())
 
 
 if __name__ == '__main__':
