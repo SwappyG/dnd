@@ -47,7 +47,8 @@ class BackendServer(object):
         self._library = Library()
         self._game = Game()
         self._context = {
-            'characters' : self._characters
+            'characters' : {}
+            'features': {}
         }
 
     def AddToInventory(self, character_name, item_name, value):
@@ -91,6 +92,14 @@ class BackendServer(object):
         this_character_dict['stats'] = this_character.GetStats()
         this_character_dict['inventory'] = this_character.GetInventory()
         this_character_dict['job_uuid'] = this_character.GetJob()
+
+        this_character_dict['learned_features'] = {}
+        feature_uuids = this_character.GetLearnedFeatures()
+        for feature_uuid in features:
+            feature = self._library.Get('features', feature_uuid)
+            this_character_dict['learned_features'][feature_uuid] = {}
+            this_character_dict['learned_features'][feature_uuid]['name'] = feature.GetName()
+            this_character_dict['learned_features'][feature_uuid]['description'] = feature.GetDescription()
 
         # Get the job from the library to get the name
         this_job = self._library.Get('jobs', this_character.GetJob())

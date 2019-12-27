@@ -9,7 +9,7 @@ class Character(object):
 
     stat_buff_levels = [4,8,12,16,19]
 
-    def __init__(self, name, job, age, gender, alignment, stats):
+    def __init__(self, name, job, age, gender, alignment, stats, max_hp, armor_class):
         self._name = name
         self._job = job
         self._age = str(age)
@@ -20,6 +20,23 @@ class Character(object):
         self._inventory = {} # name string : quantity
         self._equipped_items = {} # name string : bool
         self._stats = stats # name string : uint
+        self._max_hp = max_hp
+        self._armor_class = armor_class
+        self._hp = self._max_hp
+
+    def SetHP(self, val):
+        if val < 0:
+            return False
+        self._hp = max(0, min(val, self._max_hp)) # clip between zero and max
+        return True
+
+    def GetHP(self):
+        return self._hp
+
+    def SetMaxHP(self, val):
+        if val < 0:
+            return False
+        self.SetHP(self.GetHP()) # make sure current HP is clipped to be between 0 and max
 
     def AddToInventory(self, item_name, quantity):
         if item_name in self._inventory:
