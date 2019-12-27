@@ -97,8 +97,18 @@ class Character(object):
             return True
         return False
 
-    def Unequip(self, item_name):
-        self._equipped_items.pop(item_name, None)
+    def Unequip(self, item_name, quantity):
+        if quantity <= 0:
+            return False
+            
+        if item_name in self._equipped_items:
+            quantity_to_unequip = min(quantity, self._inventory[item_name])
+            self._equipped_items[item_name] -= quantity_to_unequip
+            self.AddToInventory(item_name, quantity_to_unequip)
+            if (self._equipped_items[item_name] == 0):
+                del self._equipped_items[item_name]
+            return True
+        return False
         
     def IncrementLevel(self, library, selected_options, stat_buffs = None):
         job_obj = library.Get('jobs', self._job)

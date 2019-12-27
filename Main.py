@@ -94,9 +94,9 @@ def equiped():
     print(character_name, item_name, action)
     if action == 'decrement':
         print('decrementing')
-        server.RemoveFromInventory(character_name, item_name, 1)
+        server.Unequip(character_name, item_name, 1)
     else:
-        server.AddToInventory(character_name, item_name, 1)
+        server.Equip(character_name, item_name, 1)
 
     server.GetContext()['curr_character'] = server.GetContext()['characters'][character_name]
     return render_template('index.html', context=server.GetContext())
