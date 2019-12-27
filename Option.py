@@ -36,7 +36,7 @@ class Option(object):
         return (expected_num_features == len(already_selected_features))
 
     def NumOptions(self, level):
-        return len([ii for ii in self._unlock_levels if (int(ii) == level]))
+        return len([ii for ii in self._unlock_levels if (int(ii) == level)])
 
     def RemainingFeatures(self, already_selected_features):
         return [name for name in self._features if (name not in already_selected_features)]

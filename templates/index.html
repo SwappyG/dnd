@@ -20,10 +20,10 @@
                         <h2>Status</h2>
                     </div>
                 </div>
-                {%for character in characters %} 
+                {%for character in context['characters'] %} 
                     <div class="row mr-1">
                         <div class="col">
-                            <button type="button" class="btn btn-secondary btn-block mb-3">{{character.GetName()}}</button>
+                            <button type="button" class="btn btn-secondary btn-block mb-3">{{character}}</button>
                         </div>
                     </div>
                 {%endfor%}
@@ -31,16 +31,16 @@
             <div class="col-10">
                 <div class="row">
                     <div class="col-2">
-                        <h3>{{character.GetName()}}</h3>
+                        <h3>{{context['curr_character']['name']}}</h3>
                     </div>
                     <div class="col-6">
-                        <h3>character.GetJobName()</h3>
+                        <h3>{{context['curr_character']['job']}}</h3>
                     </div>
                     <div class="col-2">
-                        <h3>{{character.GetLevel()}}</h3>
+                        <h3>{{context['curr_character']['level']}}</h3>
                     </div>
                     <div class="col-2">
-                        <h3>{{character.GetAge() + character.GetGender()}}</h3>
+                        <h3>{{context['curr_character']['age'] + context['curr_character']['level']}}</h3>
                     </div>
                 </div>
                 <hr>
@@ -51,7 +51,7 @@
                                 <h5>STR</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['STR']}}</h5>
+                                <h5>{{context['curr_character']['stats']['STR']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -59,7 +59,7 @@
                                 <h5>DEX</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['DEX']}}</h5>
+                                <h5>{{context['curr_character']['stats']['DEX']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -67,7 +67,7 @@
                                 <h5>CON</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['CON']}}</h5>
+                                <h5>{{context['curr_character']['stats']['CON']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -75,7 +75,7 @@
                                 <h5>INT</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['INT']}}</h5>
+                                <h5>{{context['curr_character']['stats']['INT']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -83,7 +83,7 @@
                                 <h5>WIS</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['WIS']}}</h5>
+                                <h5>{{context['curr_character']['stats']['WIS']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -91,7 +91,7 @@
                                 <h5>CHR</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['CHR']}}</h5>
+                                <h5>{{context['curr_character']['stats']['CHR']}}</h5>
                             </div>
                         </div>
                         <hr>
@@ -100,7 +100,7 @@
                                 <h5>HP</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['HP']}}</h5>
+                                <h5>{{context['curr_character']['HP']}}</h5>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -108,7 +108,7 @@
                                 <h5>AC</h5>
                             </div>
                             <div class="col">
-                                <h5>{{character.GetStats()['AC']}}</h5>
+                                <h5>{{context['curr_character']['AC']}}</h5>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                         <div class="row overflow-auto mt-2" style="height: 150px;" id="playerinfo">
                             <div class="col accordian-group">
                                 <div class="collapse show" id="equiped" data-parent="#playerinfo">
-                                    {%for item in character.GetEquipedItems() %} 
+                                    {%for item in context['curr_character']['equiped'] %} 
                                         <div class="row">
                                             <div class="col-8">
                                                 <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
@@ -130,7 +130,7 @@
                                             <div class="col-4">
                                                 <h6>
                                                     <i class="fa fa-chevron-left fa-2"></i>
-                                                    {{character.GetEquipedItems()[item]}}
+                                                    {{context['curr_character'][equiped][item]}}
                                                     <i class="fa fa-chevron-right fa-2"></i>
                                                 </h6>
                                             </div>
@@ -138,7 +138,7 @@
                                     {%endfor%}
                                 </div>
                                 <div class="collapse" id="inventory" data-parent="#playerinfo">
-                                    {%for item in character.GetInventory() %} 
+                                    {%for item in context['curr_character']['inventory'] %} 
                                         <div class="row">
                                             <div class="col-8">
                                                 <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
@@ -146,7 +146,7 @@
                                             <div class="col-4">
                                                 <h6>
                                                     <i class="fa fa-chevron-left fa-2"></i>
-                                                    {{character.GetInventory()[item]}}
+                                                    {{context['curr_character']['inventory'][item]}}
                                                     <i class="fa fa-chevron-right fa-2"></i>
                                                 </h6>
                                             </div>
@@ -162,16 +162,16 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-3 overflow-auto" style="height: 150px;">
-                                {%for feature in character.GetLearnedFeatures()%}
-                                    <h6 aria-expanded="false" data-toggle="collapse" data-target="#{{feature}}">{{feature}}</h6>
+                                {%for feature in context['curr_character']['learned_features']%}
+                                    <h6 aria-expanded="false" data-toggle="collapse" data-target="#{{feature}}">{{context['curr_character']['learned_features'][feature]['name']}}</h6>
                                 {%endfor%}
                             </div>
                             <div class="col-9">
                                 <div class="row" id="featureinfo" style="height: 150px;">
                                     <div class="col accordian-group">
-                                        {%for feature in character.GetLearnedFeatures()%}
+                                        {%for feature in context['curr_character']['learned_features']%}
                                             <div class="collapse" id="{{feature}}" data-parent="#featureinfo">
-                                                <h6>{{feature}}</h6>
+                                                <h6>{{context['curr_character']['learned_features'][feature]['description']}}</h6>
                                             </div>
                                         {%endfor%}
                                     </div>
