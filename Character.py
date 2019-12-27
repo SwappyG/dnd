@@ -33,7 +33,6 @@ class Character(object):
         self._inventory[item_name] = quantity
         return True
 
-
     def RemoveFromInventory(self, item_name, quantity = None):
         if item_name in self._inventory:
             if (quantity == None):
@@ -59,9 +58,19 @@ class Character(object):
 
         return False
 
-    def Equip(self, item_name):
+    def Equip(self, item_name, quantity):
+        if quantity <= 0:
+            return False
+
         if item_name in self._inventory:
-            self._equipped_items[item_name] = True
+            quantity_to_equip = min(quantity, self._inventory[item_name])
+            if item_name in self._equipped_items:
+                self._equipped_items[item_name] += quantity_to_equip
+            else:
+                self._equipped_items[item_name] = quantity_to_equip
+            self._inventory[item_name] -= quantity_to_equip
+            if (self._inventory[item_name] == 0):
+                del self._inventory[item_name]
             return True
         return False
 
@@ -126,8 +135,8 @@ class Character(object):
     def GetName(self):
         return self._name
 
-    def GetJobName(self):
-        return self._job.GetName()
+    def GetJob(self):
+        return self._job
 
     def GetAge(self):
         return self._age
