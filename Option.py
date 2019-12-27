@@ -36,7 +36,7 @@ class Option(object):
         return (expected_num_features == len(already_selected_features))
 
     def NumOptions(self, level):
-        return len([ii for ii in self._unlock_levels if int(ii) == level])
+        return len([ii for ii in self._unlock_levels if (int(ii) == level]))
 
     def RemainingFeatures(self, already_selected_features):
         return [name for name in self._features if (name not in already_selected_features)]
@@ -52,7 +52,7 @@ class Option(object):
         Return:
             None if there's nothing to learn at this level or if prereqs aren't met
             (uint, list of string) - first index is the number of features that can be learned and the second is the list of options
-        """
+        """ 
         if (self._prereq_features) != []:
             if not all([(feature in already_selected_features) for feature in self._prereq_features]):
                 return None

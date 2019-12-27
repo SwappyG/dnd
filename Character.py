@@ -9,7 +9,7 @@ class Character(object):
 
     stat_buff_levels = [4,8,12,16,19]
 
-    def __init__(self, name, job, age, gender, alignment, stats):
+    def __init__(self, name, job, age, gender, alignment, stats, max_hp, armor_class):
         self._name = name
         self._job = job
         self._age = str(age)
@@ -20,19 +20,39 @@ class Character(object):
         self._inventory = {} # name string : quantity
         self._equipped_items = {} # name string : bool
         self._stats = stats # name string : uint
+        self._max_hp = max_hp
+        self._armor_class = armor_class
+        self._hp = self._max_hp
 
-    def AddToInventory(self, item_name, quantity):
-        if quantity < 0:
-            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
+    def SetHP(self, val):
+        if val < 0:
             return False
-        
-        if item_name in self._inventory:
-            self._inventory[item_name] += quantity
-            return True
-
-        self._inventory[item_name] = quantity
+        self._hp = max(0, min(val, self._max_hp)) # clip between zero and max
         return True
 
+    def GetHP(self):
+        return self._hp
+
+    def SetMaxHP(self, val):
+        if val < 0:
+            return False
+        self.SetHP(self.GetHP()) # make sure current HP is clipped to be between 0 and max
+
+    def AddToInventory(self, item_name, quantity):
+        if item_name in self._inventory:
+            if quantity >= 0:
+                self._inventory[item_name] += quantity
+                return True
+
+            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
+            return False 
+        else:
+            if quantity >= 0:
+                self._inventory[item_name] = quantity
+                return True
+            
+            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
+            return False
 
     def RemoveFromInventory(self, item_name, quantity = None):
         if item_name in self._inventory:
@@ -59,9 +79,19 @@ class Character(object):
 
         return False
 
-    def Equip(self, item_name):
+    def Equip(self, item_name, quantity):
+        if quantity <= 0:
+            return False
+
         if item_name in self._inventory:
-            self._equipped_items[item_name] = True
+            quantity_to_equip = min(quantity, self._inventory[item_name])
+            if item_name in self._equipped_items:
+                self._equipped_items[item_name] += quantity_to_equip
+            else:
+                self._equipped_items[item_name] = quantity_to_equip
+            self._inventory[item_name] -= quantity_to_equip
+            if (self._inventory[item_name] == 0):
+                del self._inventory[item_name]
             return True
         return False
 
@@ -126,8 +156,8 @@ class Character(object):
     def GetName(self):
         return self._name
 
-    def GetJobName(self):
-        return self._job.GetName()
+    def GetJob(self):
+        return self._job
 
     def GetAge(self):
         return self._age
