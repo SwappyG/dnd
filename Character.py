@@ -22,16 +22,20 @@ class Character(object):
         self._stats = stats # name string : uint
 
     def AddToInventory(self, item_name, quantity):
-        if quantity < 0:
+        if item_name in self._inventory:
+            if quantity >= 0:
+                self._inventory[item_name] += quantity
+                return True
+
+            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
+            return False 
+        else:
+            if quantity >= 0:
+                self._inventory[item_name] = quantity
+                return True
+            
             print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
             return False
-        
-        if item_name in self._inventory:
-            self._inventory[item_name] += quantity
-            return True
-
-        self._inventory[item_name] = quantity
-        return True
 
     def RemoveFromInventory(self, item_name, quantity = None):
         if item_name in self._inventory:

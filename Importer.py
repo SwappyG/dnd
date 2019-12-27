@@ -11,6 +11,26 @@ def ImportCSV(file_path):
     data_frame = pd.read_csv(file_path, index_col='Name', sep="|")
     return data_frame.to_dict('index')
 
+def Import(library, dict_name, file_path):
+    # TODO: Add exception handling
+    if dict_name == 'effects':
+        effects = ImportEffects(file_path)
+        library.AddDict('effects', effects)
+    elif dict_name == 'features':
+        features = ImportFeatures(file_path, library)
+        library.AddDict('features', features)
+    elif dict_name == 'options':
+        options = ImportOptions(file_path, library)
+        library.AddDict('options', options)
+    elif dict_name == 'jobs':
+        jobs = ImportOptions(file_path, library)
+        library.AddDict('jobs', jobs)
+    elif dict_name == 'items':
+        print("Item importing is not implemented yet")
+        return False
+
+    return True
+
 def ImportEffects(file_path):
     effects_dict = ImportCSV(file_path)
     effects = {}
