@@ -15,12 +15,13 @@ def ImportEffects(file_path):
     effects_dict = ImportCSV(file_path)
     effects = {}
     for name in effects_dict:
+        print("importing Effect <{}>".format(name))
         this_uuid = uuid.uuid4()
         duration = effects_dict[name]['Duration']
         effect_type = effects_dict[name]['Type']
         description = effects_dict[name]['Description']
         effects[this_uuid] = Effect(name, this_uuid, effect_type, duration, description)
-
+        
     return effects
 
 def ImportFeatures(file_path, library):

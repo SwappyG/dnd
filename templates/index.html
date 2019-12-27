@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">DnD</span>
+    </nav>
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-2" style="border-right: 1px solid #ccc;">
+                <div class="row mr-1">
+                    <div class="col">
+                        <h2>Status</h2>
+                    </div>
+                </div>
+                {%for character in characters %} 
+                    <div class="row mr-1">
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary btn-block mb-3">{{character.GetName()}}</button>
+                        </div>
+                    </div>
+                {%endfor%}
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>{{character.GetName()}}</h3>
+                    </div>
+                    <div class="col-6">
+                        <h3>character.GetJobName()</h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>{{character.GetLevel()}}</h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>{{character.GetAge() + character.GetGender()}}</h3>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-2" style="border-right: 1px solid #ccc;">
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>STR</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['STR']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>DEX</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['DEX']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>CON</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['CON']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>INT</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['INT']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>WIS</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['WIS']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>CHR</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['CHR']}}</h5>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>HP</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['HP']}}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h5>AC</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{character.GetStats()['AC']}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="container" id="playerinfo">
+                                <button class="btn btn-secondary dropdown" aria-expanded="false" aria-controls="equiped" data-toggle="collapse" data-target="#equiped" data-parent="#playerinfo">Equiped</button>
+                            <button class="btn btn-secondary dropdown" aria-expanded="false" aria-controls="inventory" data-toggle="collapse" data-target="#inventory" data-parent="#playerinfo">Inventory</button>
+                            <div class="accordion-group">
+                                <div class="collapse indent" id="equiped" data-parent="#playerinfo">
+                                    <div class="row overflow-auto mt-2" style="height: 150px !important;">
+                                        <div class="col">
+                                            {%for item in character.GetEquipedItems() %} 
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <h6>
+                                                            <i class="fa fa-chevron-left fa-2"></i>
+                                                            {{character.GetEquipedItems()[item]}}
+                                                            <i class="fa fa-chevron-right fa-2"></i>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            {%endfor%}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="collapse" id="inventory" data-parent="#playerinfo">
+                                    <div class="row overflow-auto mt-2" style="height: 150px !important;">
+                                        <div class="col">
+                                            {%for item in character.GetInventory() %} 
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6><i class="fa fa-trash fa-2 mr-2"></i>{{item}}</h6>
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <h6>
+                                                            <i class="fa fa-chevron-left fa-2"></i>
+                                                            {{character.GetInventory()[item]}}
+                                                            <i class="fa fa-chevron-right fa-2"></i>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            {%endfor%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <h2>Features</h2>
+                                    </div>
+                                </div>
+                                <div class="row overflow-auto" style="height: 150px !important;">
+                                    <div class="col">
+                                        <h6>Feature Name</h6>
+
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-8">
+                                <div class="row">
+                                    <h2 style="color: white;">Description</h2>
+                                </div>
+                                <div class="row">
+                                    <p>description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row mb-2 mt-2">
+            <div class="col-2">
+                <h2>Import</h2>
+            </div>
+            <div class="col-10">
+                <form class="form-inline" action="/import" method="PUT">
+                    <div class="form-group mb-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="importfile" name="importfile" required>
+                            <label class="custom-file-label" for="importfile">Choose file...</label>
+                        </div>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select class="custom-select" id="type" name="type">
+                            <option value="effects">Effects</option>
+                            <option value="features">Features</option>
+                            <option value="options">Options</option>
+                            <option value="jobs">Jobs</option>
+                            <option value="items">Items</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mb-2">Upload</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
