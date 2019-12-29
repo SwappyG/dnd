@@ -19,7 +19,7 @@ class Character(object):
         self._alignment = alignment # string
         self._learned_features = [] # name strings
         self._inventory = {} # name string : quantity
-        self._equipped_items = {} # name string : bool
+        self._equipped_items = {} # name string : quantity
         self._stats = stats # name string : uint
         self._max_hp = max_hp
         self._armor_class = armor_class
@@ -31,13 +31,15 @@ class Character(object):
         self._hp = max(0, min(val, self._max_hp)) # clip between zero and max
         return True
 
-    def GetHP(self):
-        return self._hp
-
     def SetMaxHP(self, val):
         if val < 0:
             return False
         self.SetHP(self.GetHP()) # make sure current HP is clipped to be between 0 and max
+
+    def SetAC(self, val):
+        if val < 0:
+            return False
+        self._armor_class = val
 
     def AddToInventory(self, item_name, quantity):
         print ("adding quantity <{}> to item <{}>".format(quantity, item_name))
@@ -155,6 +157,15 @@ class Character(object):
         self._learned_features = self._learned_features + new_learned_features
         self._level += 1
         return True
+
+    def GetHP(self):
+        return self._hp
+
+    def GetMaxHP(self):
+        return self._max_hp
+
+    def GetAC(self):
+        return self._armor_class
 
     def GetLearnedFeatures(self):
         return self._learned_features

@@ -10,6 +10,16 @@ class Option(object):
         self._prereq_features = prereq_features
         self._unlock_levels = unlock_levels
 
+    def GetDict(self):
+        option_dict = {}
+        option_dict['uuid'] = self._uuid
+        option_dict['name'] = self._name
+        option_dict['description'] = self.description
+        option_dict['features'] = self._features
+        option_dict['prereq_features'] = self._prereq_features
+        option_dict['unlock_levels'] = self._unlock_levels
+        return option_dict
+
     def GetUUID(self):
         return self._uuid
 

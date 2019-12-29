@@ -10,6 +10,15 @@ class Job(object):
         self._features = features # uuids only
         self._options = options # uuids only 
 
+    def GetDict(self):
+        job_dict = {}
+        job_dict['uuid'] = self._uuid
+        job_dict['name'] = self._name
+        job_dict['description'] = self._description
+        job_dict['features'] = self._features
+        job_dict['options'] = self._options
+        return job_dict
+
     def GetUUID(self):
         return self._uuid
 

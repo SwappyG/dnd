@@ -9,6 +9,15 @@ class Feature(object):
         self._prereq_features = prereq_features # list of name strings
         self._unlock_level = unlock_level
 
+    def GetDict(self):
+        feature_dict = {}
+        feature_dict['uuid'] = self._uuid
+        feature_dict['name'] = self._name
+        feature_dict['description'] = self._description
+        feature_dict['effects'] = self._effects
+        feature_dict['prereq_features'] = self._prereq_features
+        feature_dict['unlock_level'] = self._unlock_level
+
     def GetUUID(self):
         return self._uuid
 
