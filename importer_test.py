@@ -61,6 +61,6 @@ if __name__=="__main__":
 
     game.IncrementLevel('test_name_a', selected_options)
 
-    game.Save(os.getcwd())
+    game.Save(os.getcwd(), "test_zip.zip")
 
-    game.Load('test_zip')
+    game.Load('test_zip.zip')

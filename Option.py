@@ -3,22 +3,15 @@ from Effect import Effect
 
 class Option(object):
     def __init__(self, name, this_uuid, description, features, prereq_features, unlock_levels):
-        self._uuid = this_uuid
-        self._name = name
-        self._description = description
+        self._uuid = this_uuid # uuid
+        self._name = name # string
+        self._description = description # string
         self._features = features # name strings only
-        self._prereq_features = prereq_features
-        self._unlock_levels = unlock_levels
+        self._prereq_features = prereq_features # list of uuids
+        self._unlock_levels = unlock_levels # list of uints
 
     def GetDict(self):
-        option_dict = {}
-        option_dict['uuid'] = self._uuid
-        option_dict['name'] = self._name
-        option_dict['description'] = self.description
-        option_dict['features'] = self._features
-        option_dict['prereq_features'] = self._prereq_features
-        option_dict['unlock_levels'] = self._unlock_levels
-        return option_dict
+        return self.__str__()
 
     def GetUUID(self):
         return self._uuid
@@ -41,36 +34,54 @@ class Option(object):
     def GetPrereqFeatures(self):
         return self._prereq_features
 
-    def IsConsistent(self, level, already_selected_features):
-        expected_num_features = len([ii for ii in self._unlock_levels if ii <= level])
-        return (expected_num_features == len(already_selected_features))
-
-    def NumOptions(self, level):
+    def NumUnlocksAtLevel(self, level):
+        """
+        Get the number of features unlocked at this level
+        """
         return len([ii for ii in self._unlock_levels if (int(ii) == level)])
 
     def RemainingFeatures(self, already_selected_features):
+        """
+        Returns all the features remaining in this option based on the features already known
+        """
         return [name for name in self._features if (name not in already_selected_features)]
 
     def GetOptions(self, level, already_selected_features):
         """
-        Provides a tuple of available features at the specified level
+        Provides a dict of available features at the specified level
 
         Parameters:
             level (uint): level at which to see if any features are available
             already_selected_features (list of string): all features the character already knows
 
         Return:
-            None if there's nothing to learn at this level or if prereqs aren't met
-            (uint, list of string) - first index is the number of features that can be learned and the second is the list of options
+            (dict) - num_options - how many features to select
+                   - feature_uuids - the list of features to select from
         """ 
+
+        # If there are any prerequisite feature, check that they've been satisfied
         if (self._prereq_features) != []:
             if not all([(feature in already_selected_features) for feature in self._prereq_features]):
-                return None
+                return {'num_options' : 0, 'feature_uuids':[] } # 0 options, empty list
 
-        if self.NumOptions(level) == 0:
-            return None
+        num_unlocks = self.NumUnlocksAtLevel(level)
+        if num_unlocks == 0:
+            return {'num_options' : 0, 'feature_uuids':[] } # 0 options, empty list
 
         return {
-            'num_options': self.NumOptions(level),
+            'num_options': num_unlocks,
             'feature_uuids': self.RemainingFeatures(already_selected_features)
+        }
+
+    def __str__(self):
+        """
+        Puts all instance members into a dict and returns it 
+        """
+        return {
+            'uuid' : self._uuid,
+            'name' : self._name,
+            'description' : self.description,
+            'features' : self._features,
+            'prereq_features' : self._prereq_features,
+            'unlock_levels' : self._unlock_levels
         }

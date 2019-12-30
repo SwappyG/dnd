@@ -4,12 +4,13 @@ from Library import Library
 from pprint import pprint
 
 class Game(object):
+
     def __init__(self):
         self._characters = {}
         self._library = Library()
 
-    def Save(self, folderpath):
-        Importer.Save(folderpath, "test_zip", self._library, self._characters)
+    def Save(self, folderpath, save_name):
+        Importer.Save(folderpath, save_name, self._library, self._characters)
 
     def Load(self, zip_name):
         Importer.Load(zip_name)
@@ -184,94 +185,8 @@ class Game(object):
             pprint (kwargs["character_name"])
             character_name = kwargs["character_name"]
             character = self._characters[character_name]
-
             return character.GetNextLevelOptions(self._library)
 
         else:
             print("<{}> is not a valid key for GetContext", context_name)
             return {}
-    
-    
-
-
-class BackendServer(object):
-    def __init__(self):
-        self._library = Library()
-        effects = Importer.ImportEffects("effects_lib.csv")
-        self._library.AddDict("effects", effects)
-
-        features = Importer.ImportFeatures("features_lib.csv", self._library)
-        self._library.AddDict("features", features)
-        
-        options = Importer.ImportOptions("options_lib.csv", self._library)
-        self._library.AddDict("options", options)
-        
-        jobs = Importer.ImportJobs("jobs_lib.csv", self._library) 
-        self._library.AddDict("jobs", jobs)
-        self._game = Game()
-        self._context = {
-            'characters' : {},
-            'curr_character': {'name': '', 'job': '', 'level': '', 'age': '', 'gender': '', 
-                'stats': {'STR': 0, 'DEX': 0, 'CON': 0, 'INT': 0, 'WIS': 0, 'CHR': 0},
-                'HP': 0, 
-                'AC': 0,
-                'equiped': {},
-                'inventory': {},
-                'learned_features': {}
-            }
-        }
-
-    def AddToInventory(self, character_name, item_name, value):
-        if self._game.AddToInventory(character_name, item_name, value):
-            self._context['characters'][character_name]['inventory'] = self._game.GetInventory(character_name)
-            pprint(self._context['characters'][character_name]['inventory'])
-            return True
-        return False
-
-    def RemoveFromInventory(self, character_name, item_name, value):
-        if self._game.RemoveFromInventory(character_name, item_name, value):
-            self._context['characters'][character_name]['inventory'] = self._game.GetInventory(character_name)
-            return True
-        return False
-
-    def Equip(self, character_name, item_name, value):
-        if self._game.Equip(character_name, item_name, value):
-            self._context['characters'][character_name]['inventory'] = self._game.GetInventory(character_name)
-            self._context['characters'][character_name]['equiped'] = self._game.GetEquipedItems(character_name)
-            return True
-        return False
-
-    def Unequip(self, character_name, item_name, value):
-        if self._game.Unequip(character_name, item_name, value):
-            self._context['characters'][character_name]['inventory'] = self._game.GetInventory(character_name)
-            self._context['characters'][character_name]['equiped'] = self._game.GetEquipedItems(character_name)
-            return True
-        return False
-
-    def AddCharacter(self, name, job, age, gender, alignment, stats, max_hp, armour_class):
-        this_character = self._game.AddCharacter(name, job, age, gender, alignment, stats, max_hp, armour_class)
-
-        if (this_character == None):
-            return False
-        return True
-
-    def IncrementLevel(self, name):
-        level, learned_features = self._game.IncrementLevel(name, self._library)
-        
-        self._context['characters'][name]['learned_features'] = {}
-        for feature_uuid in learned_features: 
-            feature = self._library.Get('features', feature_uuid)
-            learned_feature = {}
-            learned_feature['name'] = feature.GetName()
-            learned_feature['description'] = feature.GetDescription()
-            self._context['characters'][name]['learned_features'][''.join([c for c in str(feature_uuid) if c.isalpha()][:6])] = learned_feature
-
-        self._context['characters'][name]['level'] = level
-
-    def GetContext(self):
-        return self._context
-
-    def ImportToLibrary(self, dict_name, filepath):
-        return Importer.Import(self._library, dict_name, filepath)
-
-
