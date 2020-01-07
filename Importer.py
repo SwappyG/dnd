@@ -1,15 +1,15 @@
+import os
+import zipfile
+import jsonpickle
+from pprint import pprint
+
 import pandas as pd
 import uuid
+
 from Effect import Effect
 from Feature import Feature
 from Option import Option
 from Job import Job
-
-from pprint import pprint
-
-def ImportCSV(file_path):
-    data_frame = pd.read_csv(file_path, index_col='Name', sep="|")
-    return data_frame.to_dict('index')
 
 def Import(library, dict_name, file_path):
     # TODO: Add exception handling
@@ -30,6 +30,10 @@ def Import(library, dict_name, file_path):
         return False
 
     return True
+
+def ImportCSV(file_path):
+    data_frame = pd.read_csv(file_path, index_col='Name', sep="|")
+    return data_frame.to_dict('index')
 
 def ImportEffects(file_path):
     effects_dict = ImportCSV(file_path)
@@ -170,6 +174,55 @@ def ExportCharacter(file_path, this_character):
     
     with open(file_path, 'w+') as a_file:
         a_file.write(json_string)
+
+def Save(folderpath, zip_name, library, characters):
+    files_to_zip = []
+    for character in characters:
+        this_file = "/character/" + character + ".json" 
+        os.makedirs(os.path.dirname(folderpath + this_file), exist_ok=True)
+        Pickle(folderpath + this_file, characters)
+        files_to_zip.append((this_file, folderpath))
+
+    this_file = "/library.json" 
+    os.makedirs(os.path.dirname(folderpath + this_file), exist_ok=True)
+    Pickle(folderpath + this_file, library)
+    files_to_zip.append((this_file, folderpath))
+
+    Zip(folderpath, zip_name, files_to_zip)
+
+def Load(zip_name):
+    with zipfile.ZipFile(zip_name) as zip:
+        zip.printdir()
+        with zip.open('library.json') as library_json:
+            library = Depickle(library_json.read().decode('UTF-8'))
+
+
+
+def Zip(location, zip_name, files):
+    # shutil.make_archive("test","zip")
+    with zipfile.ZipFile(zip_name, 'w') as zipf:
+        for filename, folder in files:
+            zipf.write(folder + filename, filename)
+
+def Depickle(json_string):
+    try:
+        # with open(json_string, 'r') as a_file:
+        return jsonpickle.decode(json_string)
+    except Exception as e:
+        print(("Failed to open file with path [{}], got [{}]".format(json_string, e)))
+        return None
+
+def Pickle(filepath, obj):
+    try: 
+        json_string = jsonpickle.encode(obj)
+    except Exception as e:
+        print(("Failed to serialize object, got [{}]".format(e)))
+        return False
+
+    with open(filepath, 'w+') as a_file:
+        a_file.write(json_string)
+
+    return True
 
 def Main():
     effects = CreateEffects("test_effects.csv")

@@ -1,3 +1,7 @@
 *.pyc
 *.bak
 .DS_Store
+*.zip
+library.json
+character
+*.gpg
