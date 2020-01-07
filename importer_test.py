@@ -1,5 +1,5 @@
 import Importer
-from BackendServer import Game
+from Game import Game
 from Library import Library
 import os
 

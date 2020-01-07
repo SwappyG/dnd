@@ -32,7 +32,7 @@ class Effect(object):
         """
         return {
             "name" : self._name,
-            "uuid" : str(self._uuid)
+            "uuid" : self._uuid,
             "effect_type": self._effect_type,
             "duration": self._duration,
             "description": self._description

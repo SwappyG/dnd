@@ -197,8 +197,7 @@ class Character(object):
                 - The list must be either length 1 or 2, containing on of the possible stats that could be upgraded
         """
         # Get the job and options for this level
-        job_obj = library.Get('jobs', self._job)
-        opts_for_this_level = job_obj.GetUnlockedOptions(library, self._level+1, self._learned_features)
+        opts_for_this_level = self._GetUnlockedOptions(library, self._level+1, self._learned_features)
         new_learned_features = []
 
         # Iterate for all options for this level
@@ -322,7 +321,8 @@ class Character(object):
             - list of UUIDs - all features that unlock at specified level  
         """
         job_obj = library.Get("jobs", self._job)
-        features = job_obj.GetAllFeatures
+        features = job_obj.GetAllFeatures()
+
         return [name for name in features if (level == library.Get("features", name).GetUnlockLevel())]
 
     def _GetUnlockedOptions(self, library, level, learned_features):

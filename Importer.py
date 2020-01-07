@@ -192,8 +192,11 @@ def Save(folderpath, zip_name, library, characters):
 
 def Load(zip_name):
     with zipfile.ZipFile(zip_name) as zip:
+        zip.printdir()
         with zip.open('library.json') as library_json:
-            Depickle(library_json)
+            library = Depickle(library_json.read().decode('UTF-8'))
+
+
 
 def Zip(location, zip_name, files):
     # shutil.make_archive("test","zip")
@@ -201,12 +204,12 @@ def Zip(location, zip_name, files):
         for filename, folder in files:
             zipf.write(folder + filename, filename)
 
-def Depickle(filepath):
+def Depickle(json_string):
     try:
-        with open(filepath, 'r') as a_file:
-            return jsonpickle.decode(a_file.read())
+        # with open(json_string, 'r') as a_file:
+        return jsonpickle.decode(json_string)
     except Exception as e:
-        print(("Failed to open file with path [{}], got [{}]".format(file_path, e)))
+        print(("Failed to open file with path [{}], got [{}]".format(json_string, e)))
         return None
 
 def Pickle(filepath, obj):
