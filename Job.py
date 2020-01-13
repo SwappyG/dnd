@@ -1,14 +1,13 @@
 from Feature import Feature
 from Option import Option
-from pprint import pprint
 
 class Job(object):
     def __init__(self, name, this_uuid, description, features, options):
         self._uuid = this_uuid # uuid
         self._name = name # string
         self._description = description # string
-        self._features = features # uuids only
-        self._options = options # uuids only 
+        self._features = features # list of uuids
+        self._options = options # list of uuids 
 
     def GetDict(self):
         return self.__str__()

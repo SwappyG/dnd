@@ -6,24 +6,39 @@ from Item import Item
 from copy import deepcopy
 from pprint import pprint
 
+# TODO: rename self._stats to self._stats5e 
+# Change it from dict to class, since it has fixed, known keys
+# Provide another self._stats for custom user stats in the future
+
 class Character(object):
 
     stat_buff_levels = [4,8,12,16,19]
 
     def __init__(self, name, job, age, gender, alignment, stats, max_hp, armor_class):
+        """
+        Args:
+            name: [string] - name of character (player)
+            job: [uuid] - uuid of the job
+            age: [uint] - age of character
+            gender: [string] - string describing gender (M,F,etc)
+            alignment: [string] - string describing alignment (Neutral Neutral)
+            stats: [dict of string:uint] - all stats this character has and their current values
+            max_hp: [uint] - maximum hp this character can have
+            armor_class: [uint] - the strength of the armor
+        """ 
         self._name = name
         self._job = job
         self._age = str(age)
         self._gender = gender
         self._level = 0
-        self._alignment = alignment # string
+        self._alignment = alignment 
         self._learned_features = [] # name strings
         self._inventory = {} # name string : quantity
         self._equipped_items = {} # name string : quantity
-        self._stats = stats # name string : uint
+        self._stats = stats
         self._max_hp = max_hp
         self._armor_class = armor_class
-        self._hp = self._max_hp
+        self._hp = self._max_hp # uint
 
     def SetHP(self, val):
         """

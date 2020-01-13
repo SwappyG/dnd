@@ -21,10 +21,7 @@ class Option(object):
 
     def GetDescription(self):
         return self._description
-
-    def HasFeature(self, feature_uuid):
-        return (feature_uuid in self._features)
-        
+    
     def GetAllFeatures(self):
         return self._features
 
@@ -33,6 +30,9 @@ class Option(object):
 
     def GetPrereqFeatures(self):
         return self._prereq_features
+
+    def HasFeature(self, feature_uuid):
+        return (feature_uuid in self._features)
 
     def NumUnlocksAtLevel(self, level):
         """
@@ -43,6 +43,9 @@ class Option(object):
     def RemainingFeatures(self, already_selected_features):
         """
         Returns all the features remaining in this option based on the features already known
+        
+        Parameters:
+            already_selected_features (list of UUID): features to exclude from list
         """
         return [name for name in self._features if (name not in already_selected_features)]
 
@@ -52,7 +55,7 @@ class Option(object):
 
         Parameters:
             level (uint): level at which to see if any features are available
-            already_selected_features (list of string): all features the character already knows
+            already_selected_features (list of UUID): all features the character already knows
 
         Return:
             (dict) - num_options - how many features to select

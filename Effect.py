@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 class Effect(object):
     def __init__(self, name, this_uuid, effect_type, duration, description):
         self._uuid = this_uuid # uuid

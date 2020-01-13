@@ -32,7 +32,11 @@ class Feature(object):
 
     def IsUnlocked(self, level, already_learned_features):
         """
-        Returns T/F if this feature would be unlocked givem level + known features
+        Returns T/F if this feature would be unlocked given level + known features
+        
+        Parameters
+            level (unsigned int): current level of character
+            already_learned_features (list of uuid): all features the character knows already
         """
         if level < self._unlock_level:
             return False
