@@ -61,23 +61,22 @@ class Character(object):
         self._armor_class = max(0, val)
 
     def AddToInventory(self, item_name, quantity):
+        """Adds an item to the inventory, or increments the quantity if the item already exists.
+        
+        Arguments:
+            item_name {string} -- name of the item
+            quantity {[type]} -- quantity to add (cannot be negative)
+        
+        Returns:
+            bool -- True if arguments are valid, False otherwise
         """
-        Adds an item to the inventory, or increments the quantity if the item already exists.
-        Params:
-            - item_name (string): name of the item
-            - quantity (uint): quantity to add (cannot be negative)
-        Return:
-            - True if arguments are valid, False otherwise
-        """
-        print ("adding quantity <{}> to item <{}>".format(quantity, item_name))
-
         # If the item is already in invetory, just increment the quantity
         if item_name in self._inventory:
             if quantity >= 0:
                 self._inventory[item_name] += quantity
-                pprint(self._inventory)
                 return True
 
+            print(("Quantity can't be negative when adding item to inventory, got [{}]".format(quantity)))
             return False 
 
         # If the isn't, create the key and set the value as the quantity
@@ -295,6 +294,21 @@ class Character(object):
 
     def GetEquipedItems(self):
         return self._equipped_items
+
+    def GetInventoryQuantity(self, item_name):
+        if item_name in self._inventory:
+            return self._inventory[item_name]
+        else:
+            return 0
+
+    def GetEquipedQuantity(self, item_name):
+        if item_name in self._equipped_items:
+            return self._equipped_items[item_name]
+        else:
+            return 0
+
+    def GetTotalQuantity(self, item_name):
+        return self.GetInventoryQuantity(item_name) + self.GetEquipedQuantity(item_name)
 
     def GetName(self):
         return self._name
