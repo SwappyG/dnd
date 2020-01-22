@@ -1,30 +1,32 @@
-from Feature import Feature
-from Option import Option
-from Effect import Effect
-from Item import Item
-
 class Library(object):
-    def __init__(self, dicts = {}):
+    def __init__(self, dicts=None):
         """
         Args:
             dicts: [name string, dict] all dictionaries held in this library. The keys for all the individual
                                         dict objects should be UUIDs, and the values can be anything.
                                         The keys of the dicts object (highest level) should be name strings
         """
-        self._dicts = dicts # dict of dicts
+        if dicts is None:
+            dicts = {}
+        self._dicts = dicts  # dict of dicts
 
-    def AddToDict(self, dict_name, entries, mode = 'normal'):
+    def AddToDict(self, dict_name, entries, mode='normal'):
         """Add new entries to a dict in the library
         
         Arguments:
             dict_name {string} -- must be a valid dict name
-            entries {dict of uuid:object} -- new key/value pairs to add to specified dictionary. Validity of values must be ensured by caller
-        
+            entries {dict of uuid:object} -- new key/value pairs to add to specified dictionary.
+                                             Validity of values must be ensured by caller
+            mode {string} -- indicates aggressiveness of insert. Options are:
+                             'normal' - ignore items that have duplicate keys,
+                             'overwrite' - replace existing items in dict if duplicate keys
+                             'safe' - ignore all entries if any entry has duplicate key
+
         Returns:
-            bool -- Depends on Mode: 'normal' mode adds all non duplicate entries (of existing keys), true if no exceptions are thrown
-                                     'overwrite' mode adds all entries, overwriting any already existing keys, true if no exceptions are thrown
-                                     'safe' mode only updates if all entries are non duplicate of existing keys, true if entries added
-        """        
+            bool -- Depends on Mode: 'normal' - true if no exceptions are thrown
+                                     'overwrite' - true if no exceptions are thrown
+                                     'safe' - true if entries added, false if duplicate or exception thrown
+        """
         if not (dict_name in self._dicts):
             print("Can't add new entries to dict <{}> because it isn't in the library".format(dict_name))
             return False
@@ -35,7 +37,8 @@ class Library(object):
                 self._dicts[dict_name].update(entries)
                 return True
             except Exception as e:
-                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name, entries, e))
+                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name,
+                                                                                                            entries, e))
                 return False
 
         # If mode is normal, go through each key and make sure every key it's new before making a decision
@@ -48,12 +51,13 @@ class Library(object):
                         continue
                     else:
                         entries_to_add[key] = entries[key]
-                self._dicts[dict_name].update(entries_to_add) # add only the vetted entries
+                self._dicts[dict_name].update(entries_to_add)  # add only the vetted entries
                 return True
             except Exception as e:
-                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name, entries, e))
+                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name,
+                                                                                                            entries, e))
                 return False
-            
+
         # If mode is safe, then every entry is new, or reject all of them
         elif mode == 'safe':
             try:
@@ -61,9 +65,10 @@ class Library(object):
                     if key in self._dicts[dict_name]:
                         print("Got duplicate key in AddToDict with mode set to safe <{}>".format(key))
                         return False
-                self._dicts[dict_name].update(entries) # all entries were good, add em
+                self._dicts[dict_name].update(entries)  # all entries were good, add em
             except Exception as e:
-                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name, entries, e))
+                print("Caught exception while tried to update dict <{}> with entries <{}>, got <{}>".format(dict_name,
+                                                                                                            entries, e))
                 return False
 
         else:
@@ -90,7 +95,7 @@ class Library(object):
         self._dicts.clear()
         self._dicts = new_dicts
         return True
-        
+
     def AddNewValidDict(self, name):
         """Adds a new dict name to the allowed dicts in the library
         
@@ -115,7 +120,7 @@ class Library(object):
         """
         Returns true if dict_name exists and this_uuid exists in that dict
         """
-        return (this_uuid in self.GetDict(dict_name))
+        return this_uuid in self.GetDict(dict_name)
 
     def Get(self, dict_name, this_uuid):
         """Retrieves the specified object from the library
@@ -152,13 +157,14 @@ class Library(object):
         try:
             name_dict = self.GetNameUUIDAsDict(dict_name)
             return name_dict[name]
-        except:
-            print("Either the name <{}> or dict_name <{}> was not in library".format(name, dict_name))
+        except (KeyError, ValueError, AttributeError) as e:
+            print("Either the name <{}> or dict_name <{}> was not in library, got exception <{}>".format(
+                name, dict_name, e))
             return None
 
     def GetUUIDs(self, dict_name):
         return self.GetDict(dict_name).keys()
-    
+
     def GetNames(self, dict_name):
         this_dict = self.GetDict(dict_name)
         return [this_dict[this_uuid].GetName() for this_uuid in this_dict]
@@ -168,4 +174,4 @@ class Library(object):
         Returns a dict with [name:uuid] entries of the specified dict 
         """
         this_dict = self.GetDict(dict_name)
-        return {this_dict[this_uuid].GetName():this_uuid for this_uuid in this_dict}
+        return {this_dict[this_uuid].GetName(): this_uuid for this_uuid in this_dict}

@@ -14,7 +14,7 @@ class Item(object):
         return self._quantity
 
     def AddQuantity(self, val):
-        if (val < 0):
+        if val < 0:
             return False
         
         self._quantity += val

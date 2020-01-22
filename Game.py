@@ -3,6 +3,7 @@ from Character import Character
 from Library import Library
 from pprint import pprint
 
+
 class Game(object):
 
     def __init__(self):
@@ -22,28 +23,28 @@ class Game(object):
         if name in self._characters:
             print("All characters must have unique names, <{}> is a duplicate".format(name))
             return False
-        
+
         this_character = Character(name, job, age, gender, alignment, stats, max_hp, armour_class)
         self._characters[name] = this_character
         return False
-    
+
     def AddToInventory(self, character_name, item_name, value):
-        if not character_name in self._characters:
+        if character_name not in self._characters:
             return False
         return self._characters[character_name].AddToInventory(item_name, value)
 
     def RemoveFromInventory(self, character_name, item_name, value):
-        if not character_name in self._characters:
+        if character_name not in self._characters:
             return False
         return self._characters[character_name].RemoveFromInventory(item_name, value)
 
     def Equip(self, character_name, item_name, value):
-        if not character_name in self._characters:
+        if character_name not in self._characters:
             return False
         return self._characters[character_name].Equip(item_name, value)
 
     def Unequip(self, character_name, item_name, value):
-        if not character_name in self._characters:
+        if character_name not in self._characters:
             return False
         return self._characters[character_name].Unequip(item_name, value)
 
@@ -57,8 +58,8 @@ class Game(object):
     def GetContext(self, context_name, **kwargs):
         if context_name == "character_detail":
             character_name = kwargs["character_name"]
-            character = self._characters(character_name)
-            
+            character = self._characters[character_name]
+
             context_dict = {}
             context_dict['name'] = character.GetName()
             context_dict['level'] = character.GetLevel()
@@ -66,16 +67,16 @@ class Game(object):
             context_dict['gender'] = character.GetGender()
             context_dict['job_uuid'] = character.GetJob()
             context_dict['job_name'] = self._library.Get('jobs', context_dict['job_uuid']).GetName()
-        
+
         elif context_name == 'equiped':
             character_name = kwargs.get("character_name")
-            character = self._characters(character_name)
+            character = self._characters[character_name]
 
-            return character.GetEquipedItems()
+            return character.GetEquippedItems()
 
         elif context_name == 'stats':
             character_name = kwargs.get("character_name")
-            character = self._characters(character_name)
+            character = self._characters[character_name]
 
             stats = character.GetStats()
             stats['hp'] = character.GetHP()
@@ -85,13 +86,13 @@ class Game(object):
 
         elif context_name == 'inventory':
             character_name = kwargs.get("character_name")
-            character = self._characters(character_name)
+            character = self._characters[character_name]
 
             return character.GetInventory()
 
         elif context_name == 'learned_features':
             character_name = kwargs.get("character_name")
-            character = self._characters(character_name)
+            character = self._characters[character_name]
 
             context_dict = {}
             feature_uuids = character.GetLearnedFeatures()
@@ -161,7 +162,7 @@ class Game(object):
             jobs_dict = self._library.Get('jobs')
             features_dict = self._library.Get('features')
             options_dict = self._library.Get('options')
-            
+
             job_uuid = kwargs.get('uuid')
             this_job = jobs_dict[job_uuid]
             this_job_as_dict = this_job.GetDict()
@@ -180,9 +181,8 @@ class Game(object):
             this_job_as_dict['options'] = options
             this_job_as_dict['features'] = features
 
-
         elif context_name == 'next_level_options':
-            pprint (kwargs["character_name"])
+            pprint(kwargs["character_name"])
             character_name = kwargs["character_name"]
             character = self._characters[character_name]
             return character.GetNextLevelOptions(self._library)

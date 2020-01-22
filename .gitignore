@@ -6,3 +6,5 @@ library.json
 character
 *.gpg
 *.egg-info
+*.idea
+*.vscode

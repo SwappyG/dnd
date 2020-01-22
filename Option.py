@@ -1,17 +1,14 @@
-from Feature import Feature
-from Effect import Effect
-
 class Option(object):
     def __init__(self, name, this_uuid, description, features, prereq_features, unlock_levels):
-        self._uuid = this_uuid # uuid
-        self._name = name # string
-        self._description = description # string
-        self._features = features # name strings only
-        self._prereq_features = prereq_features # list of uuids
-        self._unlock_levels = unlock_levels # list of uints
+        self._uuid = this_uuid  # uuid
+        self._name = name  # string
+        self._description = description  # string
+        self._features = features  # name strings only
+        self._prereq_features = prereq_features  # list of uuids
+        self._unlock_levels = unlock_levels  # list of uints
 
     def GetDict(self):
-        return self.__str__()
+        return self.__str__
 
     def GetUUID(self):
         return self._uuid
@@ -21,7 +18,7 @@ class Option(object):
 
     def GetDescription(self):
         return self._description
-    
+
     def GetAllFeatures(self):
         return self._features
 
@@ -32,7 +29,7 @@ class Option(object):
         return self._prereq_features
 
     def HasFeature(self, feature_uuid):
-        return (feature_uuid in self._features)
+        return feature_uuid in self._features
 
     def NumUnlocksAtLevel(self, level):
         """
@@ -60,31 +57,31 @@ class Option(object):
         Return:
             (dict) - num_options - how many features to select
                    - feature_uuids - the list of features to select from
-        """ 
+        """
 
         # If there are any prerequisite feature, check that they've been satisfied
-        if (self._prereq_features) != []:
-            if not all([(feature in already_selected_features) for feature in self._prereq_features]):
-                return {'num_options' : 0, 'feature_uuids':[] } # 0 options, empty list
+        if not set(self._prereq_features).issubset(already_selected_features):
+            return {'num_options': 0, 'feature_uuids': []}  # 0 options, empty list
 
         num_unlocks = self.NumUnlocksAtLevel(level)
         if num_unlocks == 0:
-            return {'num_options' : 0, 'feature_uuids':[] } # 0 options, empty list
+            return {'num_options': 0, 'feature_uuids': []}  # 0 options, empty list
 
         return {
             'num_options': num_unlocks,
             'feature_uuids': self.RemainingFeatures(already_selected_features)
         }
 
+    @property
     def __str__(self):
         """
         Puts all instance members into a dict and returns it 
         """
         return {
-            'uuid' : self._uuid,
-            'name' : self._name,
-            'description' : self.description,
-            'features' : self._features,
-            'prereq_features' : self._prereq_features,
-            'unlock_levels' : self._unlock_levels
+            'uuid': self._uuid,
+            'name': self._name,
+            'description': self._description,
+            'features': self._features,
+            'unlock_levels': self._unlock_levels,
+            'prereq_features': self._prereq_features
         }

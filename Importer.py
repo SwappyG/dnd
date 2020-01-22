@@ -1,7 +1,6 @@
 import os
 import zipfile
 import jsonpickle
-from pprint import pprint
 
 import pandas as pd
 import uuid
@@ -10,6 +9,7 @@ from Effect import Effect
 from Feature import Feature
 from Option import Option
 from Job import Job
+
 
 def Import(library, dict_name, file_path):
     # TODO: Add exception handling
@@ -31,9 +31,11 @@ def Import(library, dict_name, file_path):
 
     return True
 
+
 def ImportCSV(file_path):
     data_frame = pd.read_csv(file_path, index_col='Name', sep="|")
     return data_frame.to_dict('index')
+
 
 def ImportEffects(file_path):
     effects_dict = ImportCSV(file_path)
@@ -45,44 +47,55 @@ def ImportEffects(file_path):
         effect_type = effects_dict[name]['Type']
         description = effects_dict[name]['Description']
         effects[this_uuid] = Effect(name, this_uuid, effect_type, duration, description)
-        
+
     return effects
+
 
 def ImportFeatures(file_path, library):
     # Import the CSV file
     features_dict = ImportCSV(file_path)
-    
+
     # Dict of all our imported features
     features = {}
 
     # Create UUIDs for all the features first
     features_name_uuid_dict = {}
     for name in features_dict:
-        features_name_uuid_dict[name] = uuid.uuid4() 
+        features_name_uuid_dict[name] = uuid.uuid4()
 
-    # Create all the features
+        # Create all the features
     for name in features_dict:
         print("importing Feature <{}>".format(name))
         description = features_dict[name]['Description']
-        
+
         # Try to find the UUIDs for all the effects that are listed
         try:
-            effect_names = features_dict[name]['Effects'].split(";") if features_dict[name]['Effects'] != "None" else []
+            effect_names = []
+            if features_dict[name]['Effects'] != "None":
+                effect_names = features_dict[name]['Effects'].split(";")
             effects = [library.GetUUIDFromName("effects", ii) for ii in effect_names]
-        except:
-            print("Failed to import feature <{}>, failed to parse effects likely due to duplication or invalid names, got effects <{}>".format(name, effect_names))
+        except KeyError as e:
+            print(
+                "Failed to import feature <{}>, failed to parse effects likely due to duplication or invalid names, "
+                "got exception {}".format(
+                    name, e))
             continue
 
         # Try to find the UUIDs (that we just made) for all the prereqs that are listed
         # TODO: if can't find in this list, also check library
         try:
-            prereq_feature_names = features_dict[name]['Prereq Features'].split(";") if features_dict[name]['Prereq Features'] != "None" else []
+            prereq_feature_names = []
+            if features_dict[name]['Prereq Features'] != "None":
+                prereq_feature_names = features_dict[name]['Prereq Features'].split(";")
             prereq_features = [features_name_uuid_dict[ii] for ii in prereq_feature_names]
-        except:
-            print("Failed to import feature <{}>, failed to parse prereqs likely due to duplication or invalid names, got prereq features <{}>".format(name, prereq_feature_names))
+        except KeyError as e:
+            print(
+                "Failed to import feature <{}>, failed to parse prereqs likely due to duplication or invalid names, "
+                "got exception {}".format(
+                    name, e))
             continue
 
-        unlock_level = features_dict[name]['Unlock Level'] 
+        unlock_level = features_dict[name]['Unlock Level']
 
         # Instantiate this feature and add it to our dict
         this_uuid = features_name_uuid_dict[name]
@@ -90,6 +103,7 @@ def ImportFeatures(file_path, library):
 
     print("\n")
     return features
+
 
 def ImportOptions(file_path, library):
     options_dict = ImportCSV(file_path)
@@ -109,16 +123,18 @@ def ImportOptions(file_path, library):
         try:
             feature_names = options_dict[name]['Features'].split(";")
             features = [library.GetUUIDFromName("features", ii) for ii in feature_names]
-        except:
-            print("Failed to import option <{}>, failed to get UUID for features <{}>".format(name, feature_names))
+        except KeyError as e:
+            print("Failed to import option <{}>, got exception <{}>".format(name, e))
             continue
 
         # Try to get UUIDs for all the prereqs in this option
         try:
-            prereq_feature_names = options_dict[name]['Prereq Features'].split(";") if options_dict[name]['Prereq Features'] != "None" else []
+            prereq_feature_names = []
+            if options_dict[name]['Prereq Features'] != "None":
+                prereq_feature_names = options_dict[name]['Prereq Features'].split(";")
             prereq_features = [library.GetUUIDFromName("features", ii) for ii in prereq_feature_names]
-        except:
-            print("Failed to import option <{}>, failed to get UUID for prereq features <{}>".format(name, prereq_feature_names))
+        except KeyError as e:
+            print("Failed to import option <{}>, got exception <{}>".format(name, e))
             continue
 
         # Create an instance of this option and add it to our dict
@@ -126,8 +142,9 @@ def ImportOptions(file_path, library):
         this_uuid = options_name_uuid_dict[name]
         options[this_uuid] = Option(name, this_uuid, description, features, prereq_features, unlock_levels)
 
-    print("\n")    
+    print("\n")
     return options
+
 
 def ImportJobs(file_path, library):
     jobs_dict = ImportCSV(file_path)
@@ -137,95 +154,97 @@ def ImportJobs(file_path, library):
         this_uuid = uuid.uuid4()
 
         description = jobs_dict[name]['Description']
-        
+
         try:
             feature_names = jobs_dict[name]['Features'].split(";")
             features = [library.GetUUIDFromName("features", ii) for ii in feature_names]
-        except:
-            print("Failed to import job <{}>, failed to get UUID for features <{}>".format(name, feature_names))
+        except KeyError as e:
+            print("Failed to import job <{}>, got exception <{}>".format(name, e))
             continue
 
         try:
             option_names = jobs_dict[name]['Options'].split(";")
             options = [library.GetUUIDFromName("options", ii) for ii in option_names]
-        except:
-            print("Failed to import job <{}>, failed to get UUID for options <{}>".format(name, feature_names))
+        except KeyError as e:
+            print("Failed to import job <{}>, got exception <{}>".format(name, e))
             continue
-        
+
         jobs[this_uuid] = Job(name, this_uuid, description, features, options)
 
     print("\n")
     return jobs
+
 
 def ImportCharacter(file_path):
     try:
         with open(file_path, 'r') as a_file:
             return jsonpickle.decode(a_file.read())
     except Exception as e:
-        print(("Failed to open file with path [{}], got [{}]".format(file_path, e)))
+        print("Failed to open file with path [{}], got [{}]".format(file_path, e))
         return None
 
+
+# noinspection PyBroadException
 def ExportCharacter(file_path, this_character):
     try:
-        name = this_character.GetName()
         json_string = jsonpickle.encode(this_character)
+    except AttributeError as att_error:
+        print("Failed to serialize object, GetName() call returned <{}>".format(att_error))
+        return
     except Exception as e:
-        print(("Failed to serial object [{}], got [{}]".format(name, e)))
-    
+        print("Failed to serialize object, got [{}]".format(e))
+        return
+
     with open(file_path, 'w+') as a_file:
         a_file.write(json_string)
+
 
 def Save(folderpath, zip_name, library, characters):
     files_to_zip = []
     for character in characters:
-        this_file = "/character/" + character + ".json" 
+        this_file = "/character/" + character + ".json"
         os.makedirs(os.path.dirname(folderpath + this_file), exist_ok=True)
         Pickle(folderpath + this_file, characters)
         files_to_zip.append((this_file, folderpath))
 
-    this_file = "/library.json" 
+    this_file = "/library.json"
     os.makedirs(os.path.dirname(folderpath + this_file), exist_ok=True)
     Pickle(folderpath + this_file, library)
     files_to_zip.append((this_file, folderpath))
 
     Zip(folderpath, zip_name, files_to_zip)
 
+
 def Load(zip_name):
-    with zipfile.ZipFile(zip_name) as zip:
-        zip.printdir()
-        with zip.open('library.json') as library_json:
-            library = Depickle(library_json.read().decode('UTF-8'))
+    with zipfile.ZipFile(zip_name) as z:
+        z.printdir()
+        with z.open('library.json') as library_json:
+            library = Depickle(library_json.read().decode('UTF-8'))  # TODO: do something with library
 
 
-
-def Zip(location, zip_name, files):
-    # shutil.make_archive("test","zip")
+def Zip(location, zip_name, files):  # TODO: make sure we need location as a param
     with zipfile.ZipFile(zip_name, 'w') as zipf:
         for filename, folder in files:
             zipf.write(folder + filename, filename)
+
 
 def Depickle(json_string):
     try:
         # with open(json_string, 'r') as a_file:
         return jsonpickle.decode(json_string)
     except Exception as e:
-        print(("Failed to open file with path [{}], got [{}]".format(json_string, e)))
+        print("Failed to open file with path [{}], got [{}]".format(json_string, e))
         return None
 
+
 def Pickle(filepath, obj):
-    try: 
+    try:
         json_string = jsonpickle.encode(obj)
     except Exception as e:
-        print(("Failed to serialize object, got [{}]".format(e)))
+        print("Failed to serialize object, got [{}]".format(e))
         return False
 
     with open(filepath, 'w+') as a_file:
         a_file.write(json_string)
 
     return True
-
-def Main():
-    effects = CreateEffects("test_effects.csv")
-
-if __name__=="__main__":
-    Main()
