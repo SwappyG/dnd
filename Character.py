@@ -1,9 +1,9 @@
 from copy import deepcopy
+from pprint import pprint
 
 
-# TODO: rename self._stats to self._stats5e
-# Change it from dict to class, since it has fixed, known keys
-# Provide another self._stats for custom user stats in the future
+# TODO: Provide another self._stats for custom user stats in the future
+# TODO: validate that the args passed to init are legit
 
 class Character(object):
     stat_buff_levels = [4, 8, 12, 16, 19]
@@ -16,7 +16,7 @@ class Character(object):
             age: [uint] - age of character
             gender: [string] - string describing gender (M,F,etc)
             alignment: [string] - string describing alignment (Neutral Neutral)
-            stats: [dict of string:uint] - all stats this character has and their current values
+            stats: [dict] - all stats this character has and their current values
             max_hp: [uint] - maximum hp this character can have
             armor_class: [uint] - the strength of the armor
         """
@@ -26,13 +26,13 @@ class Character(object):
         self._gender = gender
         self._level = 0
         self._alignment = alignment
-        self._learned_features = []  # name strings
-        self._inventory = {}  # name string : quantity
-        self._equipped_items = {}  # name string : quantity
-        self._stats = stats
+        self._learned_features = []
+        self._inventory = {}
+        self._equipped_items = {}
+        self._stats5e = stats
         self._max_hp = max_hp
         self._armor_class = armor_class
-        self._hp = self._max_hp  # uint
+        self._hp = self._max_hp
 
     def SetHP(self, val):
         """
@@ -207,8 +207,20 @@ class Character(object):
                 - The list must be either length 1 or 2, containing on of the possible stats that could be upgraded
         """
         # Get the job and options for this level
-        opts_for_this_level = self._GetUnlockedOptions(library, self._level + 1, self._learned_features)
+        opts_for_this_level = self.GetNextLevelOptions(library)
         new_learned_features = []
+        known_features = deepcopy(self._learned_features)
+
+        # If we were at level 0, let's learn our default features
+        if self._level == 0:
+            new_learned_features.extend(self._GetUnlockedFeatures(library, self._level, []))
+            print("learned features at 0 <{}>".format(new_learned_features))
+            known_features.extend(new_learned_features)
+
+        # at every other level, get the features we would learn at the next level
+        new_unlocked_features = self._GetUnlockedFeatures(library, self._level + 1, known_features)
+        new_learned_features.extend(new_unlocked_features)
+        print("learned features at <{}> - <{}>".format(self._level + 1, new_learned_features))
 
         # Iterate for all options for this level
         for opt_uuid in opts_for_this_level:
@@ -220,26 +232,27 @@ class Character(object):
             try:
                 # Make sure that the args have the right number of selections for this option
                 if len(selected_options[opt_uuid]) != num_to_select:
-                    print(("Incorrect number of options selected for [{}], expected [{}] but got [{}]".format(
+                    print(("Incorrect number features selected for option <{}>, expected <{}> but got <{}>".format(
                         opt_uuid, num_to_select, len(selected_options[opt_uuid]))))
                     return False
 
                 # Make sure every selection is actually valid in this option
-                if not all([(opt in feature_uuids) for opt in selected_options[opt_uuid]]):
-                    print(("Got invalid features selected, [{}] must all be part of [{}] for option [{}]".format(
+                if not set(selected_options[opt_uuid]).issubset(feature_uuids):
+                    print(("Selected options <{}> must be subset of <{}> for option <{}>".format(
                         selected_options[opt_uuid], feature_uuids, opt_uuid)))
                     return False
 
                 # append to our list of all the new learned features
                 new_learned_features = new_learned_features + selected_options[opt_uuid]
+                print("learned features at <{}> after sel opts - <{}>".format(self._level + 1, new_learned_features))
 
             # If the selected_options doesn't contain this option, return False
             except KeyError:
-                print("Invalid option name [{}] found in selected options".format(opt_uuid))
+                print("Invalid option name <{}> found in selected options".format(opt_uuid))
                 return False
 
         # Make a copy before we update anything
-        stats = deepcopy(self._stats)
+        stats = deepcopy(self._stats5e)
 
         # If this is a stat buff level, update stats
         if (self._level + 1) in Character.stat_buff_levels:
@@ -261,19 +274,43 @@ class Character(object):
 
                 # Only 1 and 2 are valid lengths, so return False if its not those
                 else:
-                    print("Invalid number of keys for stat_buffs, must be either 1 or 2, got [{}]".format(
-                        len(stat_buffs)))
+                    print("Invalid num of keys for stat_buffs, must be len 1 or 2, got [{}]".format(len(stat_buffs)))
                     return False
 
             # If the is not a valid key, return False
             except KeyError:
                 print("Invalid key in stat_buffs, one of [{}] are not a valid stats".format(stat_buffs))
+                return False
+
+        # If this is not a stats buff level, make sure we're not being given stats to buff
+        else:
+            if stat_buffs is not None:
+                print("stat_buffs arg cannot be specified for level <{}>, only <{}>".format(
+                    self._level + 1, self.stat_buff_levels))
+                return False
 
         # Everything went smoothly if we made it this far, so update our actual character now
-        self._stats = stats
-        self._learned_features = self._learned_features + new_learned_features
+        self._stats5e = stats
+        self._learned_features.extend(new_learned_features)
         self._level += 1
         return True
+
+    def AsDict(self):
+        return {
+            'name': self._name,
+            'job': self._job,
+            'age': self._age,
+            'gender': self._gender,
+            'level': self._level,
+            'alignment': self._alignment,
+            'learned_features': self._learned_features,
+            'inventory': self._inventory,
+            'equiped_items': self._equipped_items,
+            'stats5e': self._stats5e,
+            'max_hp': self._max_hp,
+            'armor_class': self._armor_class,
+            'hp': self._hp,
+        }
 
     def GetHP(self):
         return self._hp
@@ -324,7 +361,7 @@ class Character(object):
         return self._level
 
     def GetStats(self):
-        return self._stats
+        return self._stats5e
 
     def GetNextLevelOptions(self, library):
         """
@@ -335,12 +372,13 @@ class Character(object):
         learned_features = deepcopy(self._learned_features)
 
         # Get the unlocked features of next level, and append to already learned features
-        learned_features = learned_features + self._GetUnlockedFeatures(library, self._level + 1)
+        unlocked_features = self._GetUnlockedFeatures(library, self._level + 1, learned_features)
+        learned_features.extend(unlocked_features)
 
         # Get the options unlocked at the next level with current + upcoming known features
         return self._GetUnlockedOptions(library, self._level + 1, learned_features)
 
-    def _GetUnlockedFeatures(self, library, level):
+    def _GetUnlockedFeatures(self, library, level, already_learned_features):
         """
         Get the job object and all possible associated features. Return a list with all that unlock at
         the specified level.
@@ -350,7 +388,21 @@ class Character(object):
         job_obj = library.Get("jobs", self._job)
         features = job_obj.GetAllFeatures()
 
-        return [name for name in features if (level == library.Get("features", name).GetUnlockLevel())]
+        # util func to clean up the list comprehension
+        def _IsUnlocked(_lib, _id, _known_feats):
+            return (_id not in already_learned_features) and _lib.Get("features", _id).IsUnlocked(level, _known_feats)
+
+        # We might learn a new feature which satisfies reqs for another feature. So while we learn at least one new
+        # feature, keep iterating _IsUnlocked() checks until we learn nothing new, and return the full set of newly
+        # learned features
+        newly_learned_features = []
+        while True:
+            learned_this_round = [ii for ii in features if _IsUnlocked(library, ii, already_learned_features)]
+            if len(learned_this_round) > 0:
+                newly_learned_features.extend(learned_this_round)
+                already_learned_features.extend(learned_this_round)
+            else:
+                return newly_learned_features
 
     def _GetUnlockedOptions(self, library, level, learned_features):
         """

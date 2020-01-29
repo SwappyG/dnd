@@ -6,9 +6,6 @@ class Effect(object):
         self._duration = duration  # string
         self._description = description  # string
 
-    def GetDict(self):
-        return self.__str__()
-
     def GetUUID(self):
         return self._uuid
 
@@ -24,7 +21,7 @@ class Effect(object):
     def GetDescription(self):
         return self._description
 
-    def __str__(self):
+    def AsDict(self):
         """
         Puts all instance members into a dict and returns it 
         """

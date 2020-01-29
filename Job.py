@@ -24,15 +24,14 @@ class Job(object):
     def GetAllFeatures(self):
         return self._features
 
-    @property
-    def __str__(self):
+    def AsDict(self):
         """
         Puts all instance members into a dict and returns it 
         """
-        return {
+        return str({
             'uuid': self._uuid,
             'name': self._name,
             'description': self._description,
             'features': self._features,
             'options': self._options
-        }
+        })
