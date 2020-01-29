@@ -8,3 +8,4 @@ character
 *.egg-info
 *.idea
 *.vscode
+*Pipfile.lock*
