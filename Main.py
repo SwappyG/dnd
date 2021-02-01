@@ -11,7 +11,7 @@ app = Flask(__name__)
 def makeLibrary():
     library = Library()
 
-    effects = Importer.ImportEffects("effects_lib.csv")
+    effects = Importer.import_effects("effects_lib.csv")
     library.AddDict("effects", effects)
 
     features = Importer.ImportFeatures("features_lib.csv", library)

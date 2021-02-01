@@ -1,0 +1,152 @@
+{
+    "Dealer's Gambit": {
+        "name": "Dealer's Gambit",
+        "desc": "Gambit is not only your profession but also your style of life. You have a certain number of Gambit Dice that represent your wits and resolves that you can utilize to overcome a tight situation.",
+        "features": [
+            "Rogue Ace",
+            "Dancing Cards",
+            "Deck Turnover",
+            "Lucky Throw",
+            "Flourish",
+            "Bad Beat",
+            "Mucked Deck",
+            "Trick Shot",
+            "Magic Fold",
+            "The House Always Wins"
+        ],
+        "prereq_features": [],
+        "unlock_levels": [
+            "1",
+            "1",
+            "1",
+            "3",
+            "6",
+            "10",
+            "14",
+            "18"
+        ]
+    },
+    "Tricked Deck": {
+        "name": "Tricked Deck",
+        "desc": "Whenever you make a new set of combat cards you can expend 1 gambit die to add a trick effect to your deck of combat cards. You may choose 1 effect from the list below to apply to your deck of combat cards. You may not have more than 1 tricked deck at a time. When a deck is tricked your combat cards count as magical for the purpose of overcoming resistance and immunity to non-magical attacks and damage",
+        "features": [
+            "Charmed Hearts",
+            "Poisoned Clubs",
+            "Sharpened Diamonds",
+            "Stunned Stars",
+            "Flaming Spades"
+        ],
+        "prereq_features": [],
+        "unlock_levels": [
+            "2",
+            "9"
+        ]
+    },
+    "Dealer's Archetype": {
+        "name": "Dealer's Archetype",
+        "desc": "A Sub specialization for the Card Dealer class",
+        "features": [
+            "Master of Cards",
+            "Arcane Ace"
+        ],
+        "prereq_features": [],
+        "unlock_levels": [
+            "3"
+        ]
+    },
+    "Arcane Cards": {
+        "name": "Arcane Cards",
+        "desc": "Modifies the deck with magic for added effects from thrown cards",
+        "features": [
+            "Burned Card",
+            "Escapist",
+            "Payday",
+            "Offsuits",
+            "Cold Deck",
+            "Tinted Hand",
+            "Deadman's Hand"
+        ],
+        "prereq_features": [
+            "Arcane Ace"
+        ],
+        "unlock_levels": [
+            "3",
+            "3",
+            "3",
+            "6",
+            "10",
+            "14",
+            "18"
+        ]
+    },
+    "Dealer's Cantrips": {
+        "name": "Dealer's Cantrips",
+        "desc": "Basic magic skills",
+        "features": [
+            "Gust",
+            "Minor Illusion",
+            "Message",
+            "Prestidigitation",
+            "Friends"
+        ],
+        "prereq_features": [
+            "Arcane Ace"
+        ],
+        "unlock_levels": [
+            "3",
+            "3",
+            "3",
+            "10"
+        ]
+    },
+    "Dealer's Proficiency": {
+        "name": "Dealer's Proficiency",
+        "desc": "Available Skills",
+        "features": [
+            "History",
+            "Persuasion",
+            "Sleight of Hand",
+            "Insight",
+            "Acrobatics",
+            "Deception",
+            "Stealth",
+            "Performance"
+        ],
+        "prereq_features": [],
+        "unlock_levels": [
+            "1",
+            "1",
+            "1",
+            "1"
+        ]
+    },
+    "Dealer's Expertise": {
+        "name": "Dealer's Expertise",
+        "desc": "Extra Skills",
+        "features": [
+            "Animal Handling",
+            "History",
+            "Nature",
+            "Arcana",
+            "Persuasion",
+            "Perception",
+            "Sleight of Hand",
+            "Insight",
+            "Athletics",
+            "Survival",
+            "Religion",
+            "Acrobatics",
+            "Deception",
+            "Stealth",
+            "Medicine",
+            "Investigation",
+            "Performance",
+            "Intimidation"
+        ],
+        "prereq_features": [],
+        "unlock_levels": [
+            "7",
+            "7"
+        ]
+    }
+}

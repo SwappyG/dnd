@@ -5,3 +5,6 @@
 library.json
 character
 *.gpg
+*.egg-info
+*.env
+*.idea

@@ -1,0 +1,145 @@
+{
+	"Fallkirk": {
+		"name": "Fallkirk",
+		"type": "town",
+		"description": "",
+		"status": "burned down",
+		"climate": "",
+		"country": "Dalmasca",
+		"population": 0,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Frosthaven": {
+		"name": "Frosthaven",
+		"type": "town",
+		"description": "",
+		"status": "ok",
+		"climate": "semi-frost",
+		"country": "Dalmasca",
+		"population": 1000,
+		"race": "humans",
+		"mayor": "Gilda"
+	},
+	"Heles": {
+		"name": "Heles",
+		"type": "city",
+		"description": "capital city",
+		"status": "ok",
+		"climate": "sea-side",
+		"country": "Heles",
+		"population": 5000,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Ferrolin": {
+		"name": "Ferrolin",
+		"type": "town",
+		"description": "mining town",
+		"status": "half burned",
+		"climate": "arid",
+		"country": "Baron",
+		"population": 1000,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Mazio Village": {
+		"name": "Mazio Village",
+		"type": "town", 
+		"description": "",
+		"status": "ok",
+		"climate": "plains",
+		"country": "Dalmasca",
+		"population": 1000,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Temple of Winds": {
+		"name": "Temple of Winds",
+		"type": "outpost",
+		"description": "old temple atop the Akashic Pavan Steppes",
+		"status": "ok",
+		"climate": "plains",
+		"country": "Dalmasca",
+		"population": 10,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Tribal Village": {
+		"name": "Unknown Tribal Village",
+		"type": "village",
+		"description": "tribal village along the path between Frosthaven and Heles",
+		"status": "ok",
+		"climate": "plains",
+		"country": "Dalmasca",
+		"population": 10,
+		"race": "humans",
+		"mayor": ""
+	},
+	"Dalmasca City": {
+		"name": "Dalmasca City",
+		"type": "city",
+		"description": "",
+		"status": "",
+		"climate": "",
+		"country": "Dalmasca",
+		"population": 0,
+		"race": "",
+		"mayor": ""
+	},
+	"Plains of Aganor": {
+		"name": "Plains of Aganor",
+		"type": "uninhabited",
+		"description": "",
+		"status": "",
+		"climate": "",
+		"country": "Dalmasca",
+		"population": 100,
+		"race": "giants",
+		"mayor": ""
+	},
+	"Tallinn": {
+		"name": "Tallinn",
+		"type": "",
+		"description": "",
+		"status": "",
+		"climate": "",
+		"country": "Baron",
+		"population": 0,
+		"race": "",
+		"mayor": ""
+	},
+	"10": {
+		"name": "Maple Wood",
+		"type": "town",
+		"description": "",
+		"status": "burned down",
+		"climate": "",
+		"country": "Baron",
+		"population": 0,
+		"race": ["humans","elves"],
+		"mayor": ""
+	},
+	"Mazio Fields": {
+		"name": "Mazio Fields",
+		"type": "uninhabited",
+		"description": "",
+		"status": "",
+		"climate": "occasionally thunderous",
+		"country": "Dalmasca",
+		"population": 0,
+		"race": "",
+		"mayor": ""
+	},
+	"Akashic Pavan Steppes": {
+		"name": "Akashic Pavan Steppes",
+		"type": "uninhabited",
+		"description": "mountainous steppes",
+		"status": "ok",
+		"climate": "arid, semi-frost",
+		"country": "Dalmasca",
+		"population": 0,
+		"race": "",
+		"mayor": ""
+	}
+}

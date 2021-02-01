@@ -1,0 +1,36 @@
+name|category|weapon_type|damage|damage_type|cost|weight|properties|author
+Battleaxe|Martial|Melee|1d8|Slashing|10 gp|4|Versatile (1d10)|SRD5
+Greataxe|Martial|Melee|1d12|Slashing|30 gp|7|Heavy, Two-Handed|SRD5
+Handaxe|Simple|Melee|1d6|Slashing|5 gp|2|Light, Range (20/60), Thrown|SRD5
+Longbow|Martial|Ranged|1d8|Piercing|50 gp|2|Ammunition, Heavy, Range (150/600), Two-Handed|SRD5
+Shortbow|Simple|Ranged|1d6|Piercing|25 gp|2|Ammunition, Range (80/320), Two-Handed|SRD5
+Club|Simple|Melee|1d4|bludgeoning|1 sp|2|Light|SRD5
+Greatclub|Simple|Melee|1d8|Bludgeoning|2 sp|10|Two-Handed|SRD5
+Hand Crossbow|Martial|Ranged|1d6|Piercing|75 gp|3|Ammunition, Light, Loading, Range (30/120)|SRD5
+Heavy Crossbow|Martial|Ranged|1d10|Piercing|50 gp|18|Ammunition, Heavy, Loading, Range (100/400), Two-Handed|SRD5
+Light Crossbow|Simple|Ranged|1d8|Piercing|25 gp|5|Ammunition, Loading, Range (80/320), Two-Handed|SRD5
+Dagger|Simple|Melee|1d4|Piercing|2 gp|1|Finesse, Light, Range (20/60), Thrown|SRD5
+Dart|Simple|Ranged|1d4|Piercing|5 cp|0.25|Finesse, Range (20/60), Thrown|SRD5
+Flail|Martial|Melee|1d8|Bludgeoning|10 gp|2||SRD5
+Glaive|Martial|Melee|1d10|Slashing|20 gp|6|Heavy, Reach, Two-Handed|SRD5
+Halberd|Martial|Melee|1d10|Slashing|20 gp|6|Heavy, Reach, Two-Handed|SRD5
+Light Hammer|Simple|Melee|1d4|Bludgeoning|2 gp|2|Light, Range (20/60), Thrown|SRD5
+Maul|Martial|Melee|2d6|Bludgeoning|10 gp|10|Heavy, Two-Handed|SRD5
+Warhammer|Martial|Melee|1d8|Bludgeoning|15 gp|2|Versatile (1d10)|SRD5
+Javelin|Simple|Melee|1d6|Piercing|5 sp|2|Range (30/120), Thrown|SRD5
+Lance|Martial|Melee|1d12|Piercing|10 gp|6|Reach, Special|SRD5
+Mace|Simple|Melee|1d6|Bludgeoning|5 gp|4||SRD5
+Morningstar|Martial|Melee|1d8|Piercing|15 gp|4||SRD5
+Pike|Martial|Melee|1d10|Piercing|5 gp|18|Heavy, Reach, Two-Handed|SRD5
+Quarterstaff|Simple|Melee|1d6|Bludgeoning|2 sp|4|Versatile (1d8)|SRD5
+Sickle|Simple|Melee|1d4|Slashing|1 gp|2|Light|SRD5
+Sling|Simple|Ranged|1d4|Bludgeoning|1 sp|—|Ammunition, Range (30/120)|SRD5
+Spear|Simple|Melee|1d6|Piercing|1 gp|3|Range (20/60), Thrown, Versatile (1d8)|SRD5
+Greatsword|Martial|Melee|2d6|Slashing|50 gp|6|Heavy, Two-Handed|SRD5
+Longsword|Martial|Melee|1d8|Slashing|15 gp|3|Versatile (1d10)|SRD5
+Rapier|Martial|Melee|1d8|Piercing|25 gp|2|Finesse|SRD5
+Scimitar|Martial|Melee|1d6|Slashing|25 gp|3|Finesse, Light|SRD5
+Shortsword|Martial|Melee|1d6|Piercing|10 gp|2|Finesse, Light|SRD5
+Trident|Martial|Melee|1d6|Piercing|5 gp|4|Range (20/60), Thrown, Versatile (1d8)|SRD5
+War Pick|Martial|Melee|1d8|Piercing|5 gp|2||SRD5
+Whip|Martial|Melee|1d4|Slashing|2 gp|3|Finesse, Reach|SRD5
