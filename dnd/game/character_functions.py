@@ -121,9 +121,9 @@ def increment_level(library: Library,
     unlocked_options = get_unlocked_options_at_next_level(library,
                                                           character.character_data.job,
                                                           character.character_data.level,
-                                                          character.learned_features())
+                                                          character.character_data.learned_features)
 
-    new_feats = _update_learned_features(character.learned_features(), unlocked_options, selected_options)
+    new_feats = _update_learned_features(character.character_data.learned_features, unlocked_options, selected_options)
     new_max_hp = _update_max_hp(character.character_data.hit_die, character.character_data.max_hp,
                                 character.character_data.ability_score, roll_for_hp)
     new_ability_score = _update_ability_score(character.character_data.level, character.character_data.ability_score,
@@ -137,12 +137,13 @@ def increment_level(library: Library,
                                    level=character.character_data.level + 1,
                                    sub_level=0,
                                    ability_score=new_ability_score,
+                                   skill_proficiency=character.character_data.skill_proficiency,
                                    max_hp=new_max_hp,
-                                   hit_die=character.character_data.hit_die)
+                                   hit_die=character.character_data.hit_die,
+                                   learned_features=character.character_data.learned_features.union(new_feats))
 
     return Character(character_data=character_data,
                      money=character.money(),
                      hp=character.hp(),
-                     learned_features=character.learned_features().union(new_feats),
                      equipped_items=character.equipped_items(),
                      inventory=character.inventory())

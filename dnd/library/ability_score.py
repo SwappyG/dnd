@@ -60,7 +60,7 @@ class AbilityScore(object):
 
 
 @dataclasses.dataclass(frozen=True)
-class Skill:
+class Skills:
     athletics: int = 0
     acrobatics: int = 0
     animal_handling: int = 0
@@ -81,72 +81,72 @@ class Skill:
     survival: int = 0
 
     @staticmethod
-    def from_ability_scores(ability_scores: AbilityScore, is_proficient: Skill, curr_level: int) -> Skill:
+    def from_ability_scores(ability_scores: AbilityScore, is_proficient: Skills, curr_level: int) -> Skills:
         raise_if_false(is_proficient.is_binary(), "Skills passed to is_proficient must all be either 0 or 1")
         mods = ability_scores.modifier()
-        skills = Skill(athletics=mods.STR,
-                       acrobatics=mods.DEX,
-                       animal_handling=mods.WIS,
-                       arcana=mods.INT,
-                       deception=mods.CHA,
-                       history=mods.INT,
-                       insight=mods.WIS,
-                       intimidation=mods.CHA,
-                       investigation=mods.INT,
-                       medicine=mods.WIS,
-                       nature=mods.INT,
-                       perception=mods.WIS,
-                       performance=mods.CHA,
-                       persuasion=mods.CHA,
-                       religion=mods.INT,
-                       sleight_of_hand=mods.DEX,
-                       stealth=mods.DEX,
-                       survival=mods.WIS)
+        skills = Skills(athletics=mods.STR,
+                        acrobatics=mods.DEX,
+                        animal_handling=mods.WIS,
+                        arcana=mods.INT,
+                        deception=mods.CHA,
+                        history=mods.INT,
+                        insight=mods.WIS,
+                        intimidation=mods.CHA,
+                        investigation=mods.INT,
+                        medicine=mods.WIS,
+                        nature=mods.INT,
+                        perception=mods.WIS,
+                        performance=mods.CHA,
+                        persuasion=mods.CHA,
+                        religion=mods.INT,
+                        sleight_of_hand=mods.DEX,
+                        stealth=mods.DEX,
+                        survival=mods.WIS)
 
         return skills + (is_proficient * _proficiency_bonus(curr_level))
 
     def is_binary(self):
         return all([((v == 0) or (v == 1)) for k, v in self.as_dict().items()])
 
-    def __mul__(self, multiplier: int) -> Skill:
-        return Skill(self.athletics * multiplier,
-                     self.acrobatics * multiplier,
-                     self.animal_handling * multiplier,
-                     self.arcana * multiplier,
-                     self.deception * multiplier,
-                     self.history * multiplier,
-                     self.insight * multiplier,
-                     self.intimidation * multiplier,
-                     self.investigation * multiplier,
-                     self.medicine * multiplier,
-                     self.nature * multiplier,
-                     self.perception * multiplier,
-                     self.performance * multiplier,
-                     self.persuasion * multiplier,
-                     self.religion * multiplier,
-                     self.sleight_of_hand * multiplier,
-                     self.stealth * multiplier,
-                     self.survival * multiplier)
+    def __mul__(self, multiplier: int) -> Skills:
+        return Skills(self.athletics * multiplier,
+                      self.acrobatics * multiplier,
+                      self.animal_handling * multiplier,
+                      self.arcana * multiplier,
+                      self.deception * multiplier,
+                      self.history * multiplier,
+                      self.insight * multiplier,
+                      self.intimidation * multiplier,
+                      self.investigation * multiplier,
+                      self.medicine * multiplier,
+                      self.nature * multiplier,
+                      self.perception * multiplier,
+                      self.performance * multiplier,
+                      self.persuasion * multiplier,
+                      self.religion * multiplier,
+                      self.sleight_of_hand * multiplier,
+                      self.stealth * multiplier,
+                      self.survival * multiplier)
 
-    def __add__(self, other: Skill) -> Skill:
-        Skill(self.athletics + other.athletics,
-              self.acrobatics + other.acrobatics,
-              self.animal_handling + other.animal_handling,
-              self.arcana + other.arcana,
-              self.deception + other.deception,
-              self.history + other.history,
-              self.insight + other.insight,
-              self.intimidation + other.intimidation,
-              self.investigation + other.investigation,
-              self.medicine + other.medicine,
-              self.nature + other.nature,
-              self.perception + other.perception,
-              self.performance + other.performance,
-              self.persuasion + other.persuasion,
-              self.religion + other.religion,
-              self.sleight_of_hand + other.sleight_of_hand,
-              self.stealth + other.stealth,
-              self.survival + other.survival)
+    def __add__(self, other: Skills) -> Skills:
+        Skills(self.athletics + other.athletics,
+               self.acrobatics + other.acrobatics,
+               self.animal_handling + other.animal_handling,
+               self.arcana + other.arcana,
+               self.deception + other.deception,
+               self.history + other.history,
+               self.insight + other.insight,
+               self.intimidation + other.intimidation,
+               self.investigation + other.investigation,
+               self.medicine + other.medicine,
+               self.nature + other.nature,
+               self.perception + other.perception,
+               self.performance + other.performance,
+               self.persuasion + other.persuasion,
+               self.religion + other.religion,
+               self.sleight_of_hand + other.sleight_of_hand,
+               self.stealth + other.stealth,
+               self.survival + other.survival)
 
     def as_dict(self) -> Dict[str, object]:
         return dataclasses.asdict(self)

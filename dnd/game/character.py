@@ -15,12 +15,10 @@ class Character:
                  character_data: CharacterData,
                  money: Money,
                  hp: int,
-                 learned_features: Set[str],
                  equipped_items: Dict[str, int],
                  inventory: Dict[str, int]):
         self.character_data = character_data
         self._dict = {
-            'learned_features': learned_features,
             'hp': hp,
             'equipped_items': equipped_items,
             'inventory': inventory,
@@ -33,9 +31,6 @@ class Character:
 
     def hp(self) -> int:
         return self._dict['hp']
-
-    def learned_features(self) -> Set[str]:
-        return self._dict['learned_features']
 
     def equipped_items(self) -> Dict[str, int]:
         return self._dict['equipped_items']
