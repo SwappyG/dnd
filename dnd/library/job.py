@@ -1,17 +1,19 @@
-from typing import Set, Dict
-from pprint import pformat
+from __future__ import annotations
+from typing import FrozenSet, Dict
 import dataclasses
+from dnd.utils.dataclass_types import DataClassBase
 
 
-@dataclasses.dataclass
-class Job(object):
+@dataclasses.dataclass(frozen=True)
+class Job(DataClassBase):
     name: str
     desc: str
-    features: Set[str]
-    options: Set[str]
+    features: FrozenSet[str]
+    options: FrozenSet[str]
 
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.asdict())
+    @staticmethod
+    def from_json(j: Dict) -> Job:
+        return Job(name=j['name'],
+                   features=frozenset([] if j['features'] is None else j['features']),
+                   options=frozenset([] if j['options'] is None else j['options']),
+                   desc=j['desc'])

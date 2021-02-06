@@ -1,6 +1,7 @@
-from typing import Set, Dict, Optional
-from pprint import pformat
+from __future__ import annotations
+from typing import FrozenSet, Dict, Optional
 from dnd.utils.json_types import JsonEnum
+from dnd.utils.dataclass_types import DataClassBase
 import dataclasses
 
 
@@ -27,7 +28,7 @@ class SavingThrowType(JsonEnum):
 
 
 @dataclasses.dataclass(frozen=True)
-class Spell:
+class Spell(DataClassBase):
     name: str
     level: int
     desc: str
@@ -41,10 +42,21 @@ class Spell:
     is_ritual: bool
     mats: str  # what is this?
     cost: str
-    valid_jobs: Set[str]
+    valid_jobs: FrozenSet[str]
 
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.as_dict())
+    @staticmethod
+    def from_json(j: Dict) -> Spell:
+        return Spell(name=j['name'],
+                     level=j['level'],
+                     desc=j['desc'],
+                     school=SpellSchool[j['school']],
+                     casting_time=j['casting_time'],
+                     casting_range=j['casting_range'],
+                     casting_targets=j['casting_targets'],
+                     duration=j['duration'],
+                     saving_throw=None if j['saving_throw'] is None else SavingThrowType[j['saving_throw']],
+                     is_conc=j['is_conc'],
+                     is_ritual=j['is_ritual'],
+                     mats=j['mats'],
+                     cost=j['cost'],
+                     valid_jobs=j['valid_jobs'])

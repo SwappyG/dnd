@@ -1,8 +1,8 @@
-from pprint import pformat
+from __future__ import annotations
 import dataclasses
-from typing import Dict, Optional, Tuple
-from enum import Enum
+from typing import Tuple, Dict
 from dnd.utils.json_types import JsonEnum
+from dnd.utils.dataclass_types import DataClassBase
 
 
 class ItemType(JsonEnum):
@@ -12,7 +12,7 @@ class ItemType(JsonEnum):
 
 
 @dataclasses.dataclass(frozen=True)
-class Item:
+class Item(DataClassBase):
     name: str
     desc: str
     item_type: ItemType = dataclasses.field(init=False)
@@ -20,11 +20,10 @@ class Item:
     def __post_init__(self):
         object.__setattr__(self, 'item_type', ItemType.BASIC)
 
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.asdict())
+    @staticmethod
+    def from_json(j: Dict) -> Item:
+        return Item(name=j['name'],
+                    desc=j['desc'])
 
 
 class ArmorWeight(JsonEnum):
@@ -53,14 +52,18 @@ class Armor(Item):
     has_stealth_disadvantage: bool
     item_type: ItemType = dataclasses.field(init=False)
 
+    @staticmethod
+    def from_json(j: Dict) -> Armor:
+        return Armor(name=j['name'],
+                     desc=j['desc'],
+                     weight=ArmorWeight[j['weight']],
+                     armor_type=ArmorType[j['armor_type']],
+                     ac=int(j['ac']),
+                     minimum_strength=int(j['minimum_strength']),
+                     has_stealth_disadvantage=j['has_stealth_disadvantage'])
+
     def __post_init__(self):
         object.__setattr__(self, 'item_type', ItemType.ARMOR)
-
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.asdict())
 
 
 class WeaponCategory(JsonEnum):
@@ -108,8 +111,22 @@ class Weapon(Item):
     def __post_init__(self):
         object.__setattr__(self, 'item_type', ItemType.WEAPON)
 
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.asdict())
+    @staticmethod
+    def from_json(j: Dict) -> Weapon:
+        return Weapon(name=j['name'],
+                      desc=j['desc'],
+                      weapon_category=WeaponCategory[j['weapon_category']],
+                      weapon_type=WeaponType[j['weapon_type']],
+                      damage_die=int(j['damage_die']),
+                      num_die=int(j['num_die']),
+                      bonus_damage=int(j['bonus_damage']),
+                      damage_type=DamageType[j['damage_type']],
+                      weapon_range=tuple(j['weapon_range']),
+                      hit_bonus=int(j['hit_bonus']),
+                      weight=float(j['weight']),
+                      weight_category=WeightCategory[j['weight_category']],
+                      two_handed=j['two_handed'],
+                      finesse=j['finesse'],
+                      thrown=j['thrown'],
+                      loading=j['loading'],
+                      ammunition=j['ammunition'])

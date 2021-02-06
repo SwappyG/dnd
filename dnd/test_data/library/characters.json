@@ -1,0 +1,42 @@
+{
+	"Ace" : {
+		"name":  "Ace",
+		"job": "Card Dealer",
+		"age":  20,
+		"gender": "female",
+		"alignment":  "CHAOTIC_NEUTRAL",
+		"level": 9,
+		"sub_level":  0,
+		"ability_score": {
+			"STR": 10,
+			"DEX": 18,
+			"CON": 11,
+			"INT": 9,
+			"WIS": 15,
+			"CHA": 16
+		},
+		"skill_proficiency":  {
+			"athletics": 1,
+			"acrobatics": 0,
+			"animal_handling": 0,
+			"arcana": 0,
+			"deception": 1,
+			"history": 0,
+			"insight": 0,
+			"intimidation": 0,
+			"investigation": 0,
+			"medicine": 0,
+			"nature": 0,
+			"perception": 1,
+			"performance": 1,
+			"persuasion": 1,
+			"religion": 0,
+			"sleight_of_hand": 1,
+			"stealth": 0,
+			"survival": 0
+		},
+		"max_hp": 49,
+		"hit_die":  8,
+		"learned_features": []
+	}
+}

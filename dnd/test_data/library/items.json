@@ -1,14 +1,14 @@
 {
-	"0" : {
+	"map" : {
 		"name": "map",
-		"description": ""
+		"desc": ""
 	},
-	"1" : {
+	"fine_cloths" : {
 		"name": "fine_cloths",
-		"description": ""
+		"desc": ""
 	},
-	"2" : {
+	"ink" : {
 		"name": "ink",
-		"description": ""
+		"desc": ""
 	}
 }

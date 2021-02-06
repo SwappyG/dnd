@@ -1,17 +1,26 @@
-from typing import Set, Optional, NamedTuple, Tuple, Dict
-from pprint import pformat
+from __future__ import annotations
+from typing import FrozenSet, Optional, Dict, Any
 import dataclasses
+from dnd.utils.dataclass_types import DataClassBase
 
 
 @dataclasses.dataclass(frozen=True)
-class Feature:
+class Feature(DataClassBase):
     name: str
     desc: str
-    effects: Set[str]
-    prereq_features: Set[str]
+    effects: FrozenSet[str]
+    prereq_features: FrozenSet[str]
     unlock_level: Optional[int]
 
-    def is_unlocked(self, level: int, already_learned_features: Set[str]) -> bool:
+    @staticmethod
+    def from_json(j: Dict) -> Feature:
+        return Feature(name=j['name'],
+                       effects=frozenset([] if j['effects'] is None else j['effects']),
+                       prereq_features=frozenset([] if j['prereq_features'] is None else j['prereq_features']),
+                       unlock_level=int(j['unlock_level']),
+                       desc=j['desc'])
+
+    def is_unlocked(self, level: int, already_learned_features: FrozenSet[str]) -> bool:
         """
         Returns T/F if this feature would be unlocked given level + known features
         """
@@ -19,9 +28,3 @@ class Feature:
             return False
 
         return self.prereq_features.issubset(already_learned_features)
-
-    def as_dict(self) -> Dict[str, object]:
-        return dataclasses.asdict(self)
-
-    def __str__(self) -> str:
-        return pformat(self.asdict())

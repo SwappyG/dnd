@@ -36,9 +36,9 @@ def _update_learned_features(learned_features: Set[str], option_reply: UnlockedO
 
 def _update_max_hp(hit_die: int, curr_max_hp: int, ability_score: AbilityScore, do_roll: bool):
     if do_roll:
-        return curr_max_hp + np.random.randint(1, hit_die + 1) + ability_score.modifier().CON
+        return curr_max_hp + np.random.randint(1, hit_die + 1) + ability_score.modifier.CON
 
-    return curr_max_hp + (hit_die // 2) + 1 + ability_score.modifier().CON
+    return curr_max_hp + (hit_die // 2) + 1 + ability_score.modifier.CON
 
 
 def _update_ability_score(curr_level: int, curr_ability_score: AbilityScore,
@@ -97,7 +97,7 @@ def get_unlocked_options_at_next_level(library: Library, job_name: str, curr_lev
         raise_if_false(option_name in library.options, f"[{option_name}] was not in the options library")
 
         option = library.options[option_name]
-        option_reply = option.get_feature_options(curr_level, learned_features)
+        option_reply = option.get_feature_options_at_level(curr_level, learned_features)
         if option_reply.num_options != 0:
             unlocked_options[option_name] = option_reply
 

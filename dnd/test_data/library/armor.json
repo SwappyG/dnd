@@ -132,7 +132,7 @@
     "Ring of Jumping": {
         "name": "Ring of Jumping",
         "desc": "While wearing this ring, your jump distance is tripled",
-        "armor_type": "HAND",
+        "armor_type": "HANDS",
         "ac": 0,
         "weight": "LIGHT",
         "minimum_strength": 0,

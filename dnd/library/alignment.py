@@ -1,7 +1,7 @@
-from enum import Enum
+from dnd.utils.json_types import JsonEnum
 
 
-class Alignment(Enum):
+class Alignment(JsonEnum):
     CHAOTIC_GOOD = 0
     CHAOTIC_NEUTRAL = 1
     CHAOTIC_EVIL = 2
