@@ -7,6 +7,7 @@ import npcs_slice from 'redux/slices/npcs_slice'
 import locations_slice from 'redux/slices/locations_slice'
 import spells_slice from 'redux/slices/spells_slice'
 import options_slice from 'redux/slices/options_slice'
+import items_slice from 'redux/slices/items_slice'
 
 const root = combineReducers({
   effects_slice,
@@ -15,7 +16,8 @@ const root = combineReducers({
   npcs_slice,
   locations_slice,
   spells_slice,
-  options_slice
+  options_slice,
+  items_slice
 })
 
 export default root

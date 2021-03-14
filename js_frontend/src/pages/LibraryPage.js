@@ -9,6 +9,7 @@ import { Job } from 'components/cards/Job'
 import { Option } from 'components/cards/Option'
 import { NPC } from 'components/cards/NPC'
 import { Location } from 'components/cards/Location'
+import { Weapon } from 'components/cards/Weapon'
 import { LibraryUpdater } from 'components/utils/LibraryUpdater'
 
 const LibraryPage = () => {
@@ -18,18 +19,24 @@ const LibraryPage = () => {
   const { options } = useSelector((state) => { return state.options_slice })
   const { npcs } = useSelector((state) => { return state.npcs_slice })
   const { locations } = useSelector((state) => { return state.locations_slice })
+  const { items } = useSelector((state) => { return state.items_slice })
+
+  const weapons = items.filter((elem) => { return elem.item_type === 'WEAPON' })
+  const armor = items.filter((elem) => { return elem.item_type === 'ARMOR' })
+  const only_items = items.filter((elem) => { return elem.item_type === 'BASIC' })
 
   return (
     <Grid container>
       <Grid item xs={2} />
       <Grid item xs={8}>
-        <Grid container>
+        <Grid container spacing={2}>
           <LibraryAccordian name='Effects' display_object={Effect} elements={effects} />
           <LibraryAccordian name='Features' display_object={Feature} elements={features} />
           <LibraryAccordian name='Options' display_object={Option} elements={options} />
           <LibraryAccordian name='Jobs' display_object={Job} elements={jobs} />
           <LibraryAccordian name='NPCs' display_object={NPC} elements={npcs} />
           <LibraryAccordian name='Locations' display_object={Location} elements={locations} />
+          <LibraryAccordian name='Weapons' display_object={Weapon} elements={weapons} />
         </Grid >
       </Grid>
       <Grid item xs={2} />

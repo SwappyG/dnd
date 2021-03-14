@@ -8,6 +8,7 @@ import { set_jobs } from 'redux/slices/jobs_slice'
 import { set_options } from 'redux/slices/options_slice'
 import { set_npcs } from 'redux/slices/npcs_slice'
 import { set_locations } from 'redux/slices/locations_slice'
+import { set_items } from 'redux/slices/items_slice'
 // import { set_spells } from 'redux/slices/spells_slice'
 
 const fetch_json = (address, port, lib_name, data_setter, dispatcher) => {
@@ -38,6 +39,7 @@ const LibraryUpdater = (props) => {
   UpdaterImpl({ ...props, library_name: 'options', state_field: 'options_slice', setter: set_options })
   UpdaterImpl({ ...props, library_name: 'npcs', state_field: 'npcs_slice', setter: set_npcs })
   UpdaterImpl({ ...props, library_name: 'locations', state_field: 'locations_slice', setter: set_locations })
+  UpdaterImpl({ ...props, library_name: 'items', state_field: 'items_slice', setter: set_items })
   return (
     <Grid item xs={12} />
   )
