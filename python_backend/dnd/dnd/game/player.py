@@ -14,6 +14,7 @@ import numpy as np
 @dataclasses.dataclass
 class PlayerData:
     name: str
+    character: str
     hp: int
     equipped_items: Dict[str, int]
     inventory: Dict[str, int]
@@ -23,6 +24,7 @@ class PlayerData:
     @staticmethod
     def from_json(j: Dict) -> PlayerData:
         return PlayerData(name=j['name'],
+                          character=j['character'],
                           hp=j['hp'],
                           equipped_items=dict(j['equipped_items']),
                           inventory=dict(j['inventory']),
