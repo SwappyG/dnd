@@ -1,0 +1,19 @@
+{
+    "name": "Ace",
+    "hp": 49,
+    "equipped_items": {},
+    "inventory": {},
+    "money": {
+        "gold": 100,
+        "silver": 0,
+        "value": 100.0
+    },
+    "temp_ability_score": {
+        "STR": 0,
+        "DEX": 0,
+        "CON": 0,
+        "INT": 0,
+        "WIS": 0,
+        "CHA": 0
+    }
+}
