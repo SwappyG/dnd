@@ -35,7 +35,6 @@ const Weapon = ({
       <CardContent>
         <Grid container spacing={1}>
           <CardHeading name={name} />
-          <CardNameValuePairBrief name='name' value={name} />
           <CardNameValuePairBrief name='weapon_category' value={weapon_category} />
           <CardNameValuePairBrief name='weapon_type' value={weapon_type} />
           <CardNameValuePairBrief name='damage_die' value={damage_die} />

@@ -10,6 +10,8 @@ import { Option } from 'components/cards/Option'
 import { NPC } from 'components/cards/NPC'
 import { Location } from 'components/cards/Location'
 import { Weapon } from 'components/cards/Weapon'
+import { Item } from 'components/cards/Item'
+import { Armor } from 'components/cards/Armor'
 import { LibraryUpdater } from 'components/utils/LibraryUpdater'
 
 const LibraryPage = () => {
@@ -36,6 +38,8 @@ const LibraryPage = () => {
           <LibraryAccordian name='Jobs' display_object={Job} elements={jobs} />
           <LibraryAccordian name='NPCs' display_object={NPC} elements={npcs} />
           <LibraryAccordian name='Locations' display_object={Location} elements={locations} />
+          <LibraryAccordian name='Items' display_object={Item} elements={only_items} />
+          <LibraryAccordian name='Armor' display_object={Armor} elements={armor} />
           <LibraryAccordian name='Weapons' display_object={Weapon} elements={weapons} />
         </Grid >
       </Grid>
