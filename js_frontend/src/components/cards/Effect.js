@@ -5,11 +5,11 @@ import PropTypes from 'prop-types'
 import {
   Card,
   Grid,
-  CardContent,
-  Divider
+  CardContent
 } from '@material-ui/core'
 
 import {
+  CardDivider,
   CardDescription,
   CardHeading,
   CardNameValuePairBrief
@@ -28,16 +28,10 @@ const Effect = ({ name, desc, effect_type, duration }) => {
     <Card>
       <CardContent>
         <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <CardHeading name={name} />
-            <CardNameValuePairBrief name='effect_type' value={effect_type} />
-            <CardNameValuePairBrief name='duration' value={duration} />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Divider light />
-          </Grid>
-
+          <CardHeading name={name} />
+          <CardNameValuePairBrief name='effect_type' value={effect_type} />
+          <CardNameValuePairBrief name='duration' value={duration} />
+          <CardDivider light />
           <CardDescription desc={desc} />
         </Grid>
       </CardContent>

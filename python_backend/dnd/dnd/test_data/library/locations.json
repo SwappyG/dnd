@@ -7,7 +7,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 0,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Frosthaven": {
@@ -18,7 +18,7 @@
 		"climate": "SEMI_FROST",
 		"country": "Dalmasca",
 		"population": 1000,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": "Gilda"
 	},
 	"Heles": {
@@ -29,7 +29,7 @@
 		"climate": "SEASIDE",
 		"country": "Heles",
 		"population": 5000,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Ferrolin": {
@@ -40,7 +40,7 @@
 		"climate": "ARID",
 		"country": "Baron",
 		"population": 1000,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Mazio Village": {
@@ -51,7 +51,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 1000,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Temple of Winds": {
@@ -62,7 +62,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 10,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Tribal Village": {
@@ -73,7 +73,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 10,
-		"race": "humans",
+		"races": ["humans"],
 		"leader": ""
 	},
 	"Dalmasca CITY": {
@@ -84,7 +84,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 0,
-		"race": ["human"],
+		"races": ["human"],
 		"leader": ""
 	},
 	"plains of Aganor": {
@@ -95,7 +95,7 @@
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
 		"population": 100,
-		"race": "giants",
+		"races": ["giants"],
 		"leader": ""
 	},
 	"Tallinn": {
@@ -106,7 +106,7 @@
 		"climate": "TEMPERATE",
 		"country": "Baron",
 		"population": 0,
-		"race": ["human"],
+		"races": ["human"],
 		"leader": ""
 	},
 	"10": {
@@ -117,7 +117,7 @@
 		"climate": "TEMPERATE",
 		"country": "Baron",
 		"population": 0,
-		"race": ["humans","elves"],
+		"races": ["humans","elves"],
 		"leader": ""
 	},
 	"Mazio Fields": {
@@ -128,7 +128,7 @@
 		"climate": "THUNDEROUS",
 		"country": "Dalmasca",
 		"population": 0,
-		"race": ["human"],
+		"races": ["human"],
 		"leader": ""
 	},
 	"Akashic Pavan Steppes": {
@@ -139,7 +139,7 @@
 		"climate": "SEMI_FROST",
 		"country": "Dalmasca",
 		"population": 0,
-		"race": ["human"],
+		"races": ["human"],
 		"leader": ""
 	}
 }

@@ -40,7 +40,7 @@ class Location(DataClassBase):
     name: str
     description: str
     loc_type: LocationType
-    race: FrozenSet[str]
+    races: FrozenSet[str]
     population: int
     status: LocationStatus
     climate: LocationClimate
@@ -52,7 +52,7 @@ class Location(DataClassBase):
         return Location(name=j['name'],
                         description=j['description'],
                         loc_type=LocationType[j['loc_type'].upper()],
-                        race=j['race'],
+                        races=j['races'],
                         population=j['population'],
                         status=LocationStatus[j['status']],
                         climate=LocationClimate[j['climate']],
