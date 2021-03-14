@@ -1,9 +1,0 @@
-{
-  "Main": {
-    "name": "Main",
-    "season": 7,
-    "characters": ["Ace"],
-    "locations": ["Frosthaven", "Fallkirk"],
-    "npcs": ["Gilda", ""]
-  }
-}
