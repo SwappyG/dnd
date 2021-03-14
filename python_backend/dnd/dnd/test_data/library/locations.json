@@ -2,7 +2,7 @@
 	"Fallkirk": {
 		"name": "Fallkirk",
 		"loc_type": "TOWN",
-		"description": "",
+		"desc": "",
 		"status": "FALLEN",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -13,7 +13,7 @@
 	"Frosthaven": {
 		"name": "Frosthaven",
 		"loc_type": "TOWN",
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "SEMI_FROST",
 		"country": "Dalmasca",
@@ -24,7 +24,7 @@
 	"Heles": {
 		"name": "Heles",
 		"loc_type": "CITY",
-		"description": "capital CITY",
+		"desc": "capital CITY",
 		"status": "OK",
 		"climate": "SEASIDE",
 		"country": "Heles",
@@ -35,7 +35,7 @@
 	"Ferrolin": {
 		"name": "Ferrolin",
 		"loc_type": "TOWN",
-		"description": "mining TOWN",
+		"desc": "mining TOWN",
 		"status": "RAVAGED",
 		"climate": "ARID",
 		"country": "Baron",
@@ -46,7 +46,7 @@
 	"Mazio Village": {
 		"name": "Mazio Village",
 		"loc_type": "TOWN", 
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -57,7 +57,7 @@
 	"Temple of Winds": {
 		"name": "Temple of Winds",
 		"loc_type": "outpost",
-		"description": "old temple atop the Akashic Pavan Steppes",
+		"desc": "old temple atop the Akashic Pavan Steppes",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -68,7 +68,7 @@
 	"Tribal Village": {
 		"name": "Unknown Tribal Village",
 		"loc_type": "village",
-		"description": "tribal village along the path between Frosthaven and Heles",
+		"desc": "tribal village along the path between Frosthaven and Heles",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -79,7 +79,7 @@
 	"Dalmasca CITY": {
 		"name": "Dalmasca CITY",
 		"loc_type": "CITY",
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -90,7 +90,7 @@
 	"plains of Aganor": {
 		"name": "plains of Aganor",
 		"loc_type": "WILDERNESS",
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Dalmasca",
@@ -101,7 +101,7 @@
 	"Tallinn": {
 		"name": "Tallinn",
 		"loc_type": "TOWN",
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "TEMPERATE",
 		"country": "Baron",
@@ -112,7 +112,7 @@
 	"10": {
 		"name": "Maple Wood",
 		"loc_type": "TOWN",
-		"description": "",
+		"desc": "",
 		"status": "FALLEN",
 		"climate": "TEMPERATE",
 		"country": "Baron",
@@ -123,7 +123,7 @@
 	"Mazio Fields": {
 		"name": "Mazio Fields",
 		"loc_type": "WILDERNESS",
-		"description": "",
+		"desc": "",
 		"status": "OK",
 		"climate": "THUNDEROUS",
 		"country": "Dalmasca",
@@ -134,7 +134,7 @@
 	"Akashic Pavan Steppes": {
 		"name": "Akashic Pavan Steppes",
 		"loc_type": "WILDERNESS",
-		"description": "mountainous steppes",
+		"desc": "mountainous steppes",
 		"status": "OK",
 		"climate": "SEMI_FROST",
 		"country": "Dalmasca",

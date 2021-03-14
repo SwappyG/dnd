@@ -349,14 +349,14 @@
         "unlock_level": 5
     },
     "Rune Trio": {
-        "name": "Rune Triple",
+        "name": "Rune Trio",
         "desc": "You can attack 3 times, instead of once, whenever you take the Attack action on your turn",
         "effects": [],
         "prereq_features": [],
         "unlock_level": 11
     },
     "Rune Quartet": {
-        "name": "Rune Triple",
+        "name": "Rune Quartet",
         "desc": "You can attack 4 times, instead of once, whenever you take the Attack action on your turn",
         "effects": [],
         "prereq_features": [],

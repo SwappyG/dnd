@@ -65,12 +65,12 @@ const Option = ({ name, desc, features, prereq_features, unlock_levels }) => {
           <Grid container spacing={1}>
             <CardHeading name={name} />
             <CardNameValuePairBrief name='unlock_levels' value={unlock_levels} is_vertical={false} />
-            <CardNameValuePairDynamic name='features' value={features} card_type={FeatureStatic}
-              elem_props={features_props} is_vertical={true}
+            <CardNameValuePairDynamic
+              name='features' value={features} card_type={FeatureStatic} elem_props={features_props} is_vertical
               is_clicked={() => { return state.is_features_clicked }}
               on_click={() => { setState({ ...state, is_features_clicked: !state.is_features_clicked }) }} />
-            <CardNameValuePairDynamic name='prereq_features' value={prereq_features} card_type={FeatureStatic}
-              elem_props={prereq_features_props} is_vertical={true}
+            <CardNameValuePairDynamic
+              name='prereq_features' value={prereq_features} card_type={FeatureStatic} elem_props={prereq_features_props} is_vertical
               is_clicked={() => { return state.is_prereq_features_clicked }}
               on_click={() => { setState({ ...state, is_prereq_features_clicked: !state.is_prereq_features_clicked }) }} />
             <CardDivider light />

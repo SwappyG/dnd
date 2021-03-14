@@ -47,7 +47,11 @@ def import_from_folder(folderpath: Path) -> Tuple[Library, List[PlayerData]]:
                   features=import_file_as(folderpath / 'library' / 'features.json', Feature),
                   options=import_file_as(folderpath / 'library' / 'options.json', Option),
                   jobs=import_file_as(folderpath / 'library' / 'jobs.json', Job),
-                  items=import_file_as(folderpath / 'library' / 'items.json', Item),
+                  items={
+                      **import_file_as(folderpath / 'library' / 'weapons.json', Weapon),
+                      **import_file_as(folderpath / 'library' / 'armor.json', Armor),
+                      **import_file_as(folderpath / 'library' / 'items.json', Item)
+                  },
                   locations=import_file_as(folderpath / 'library' / 'locations.json', Location),
                   spells=import_file_as(folderpath / 'library' / 'spells.json', Spell),
                   npcs=import_file_as(folderpath / 'library' / 'npcs.json', NPC),
@@ -81,7 +85,11 @@ def load(zip_file_path: Path) -> Tuple[Library, List[PlayerData]]:
                       features=import_zipped(z, 'library/features.json', Feature),
                       options=import_zipped(z, 'library/options.json', Option),
                       jobs=import_zipped(z, 'library/jobs.json', Job),
-                      items=import_zipped(z, 'library/items.json', Item),
+                      items={
+                          **import_zipped(z, 'library/items.json', Item),
+                          **import_zipped(z, 'library/weapons.json', Weapon),
+                          **import_zipped(z, 'library/armor.json', Armor)
+                      },
                       locations=import_zipped(z, 'library/locations.json', Location),
                       spells=import_zipped(z, 'library/spells.json', Spell),
                       npcs=import_zipped(z, 'library/npcs.json', NPC),

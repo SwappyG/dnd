@@ -38,13 +38,13 @@ const Job = ({ name, features, options, desc }) => {
       <CardContent>
         <Grid container spacing={1}>
           <CardHeading name={name} />
-          <CardNameValuePairDynamic name='features' value={features} card_type={FeatureStatic}
-            elem_props={features_props} is_vertical={true}
+          <CardNameValuePairDynamic
+            name='features' value={features} card_type={FeatureStatic} elem_props={features_props} is_vertical
             is_clicked={() => { return state.is_features_clicked }}
             on_click={() => { setState({ ...state, is_features_clicked: !state.is_features_clicked }) }} />
 
-          <CardNameValuePairDynamic name='options' value={options} card_type={OptionStatic}
-            elem_props={options_props} is_vertical={true}
+          <CardNameValuePairDynamic
+            name='options' value={options} card_type={OptionStatic} elem_props={options_props} is_vertical
             is_clicked={() => { return state.is_options_selected }}
             on_click={() => { setState({ ...state, is_options_selected: !state.is_options_selected }) }} />
 

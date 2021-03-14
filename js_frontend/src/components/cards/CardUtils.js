@@ -4,7 +4,7 @@ import { Grid, Divider, Typography, Box } from '@material-ui/core'
 
 const CardHeading = ({ name }) => {
   return (
-    <Grid xs={12}>
+    <Grid item xs={12}>
       <Typography variant='h5' component='div'>{name}</Typography>
     </Grid >
   )
@@ -14,11 +14,11 @@ CardHeading.propTypes = {
   name: PropTypes.string.isRequired
 }
 
-const CardNameValuePairHeading = ({ name, value, on_click }) => {
-  on_click = on_click === undefined ? (name, value) => { } : on_click
+const CardNameValuePairHeading = ({ name, on_click }) => {
+  on_click = on_click === undefined ? () => { } : on_click
   return (
-    <Grid item xs={2}>
-      <Typography variant='body1' component='div' onClick={() => on_click(name, value)}>
+    <Grid item xs={3}>
+      <Typography variant='body1' component='div' onClick={on_click}>
         <Box fontWeight="fontWeightBold">{name}:</Box>
       </Typography>
     </Grid>
@@ -27,21 +27,22 @@ const CardNameValuePairHeading = ({ name, value, on_click }) => {
 
 CardNameValuePairHeading.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   on_click: PropTypes.func
 }
 
-const CardNameValuePairBrief = ({ name, value, on_click, is_vertical }) => {
+const CardNameValuePairBrief = ({ name, value, on_click, is_vertical, testing }) => {
   if (is_vertical) {
     return (
-      <Grid item xs={12}>
-        <Grid container>
-          <CardNameValuePairHeading name={name} value={value} on_click={on_click} />
-          <Grid item xs={10}> {value.map((elem) => {
-            return (<Grid xs={12} key={elem}>- {elem}</Grid>)
-          })}</Grid>
+      <>
+        <CardNameValuePairHeading name={name} on_click={on_click} />
+        <Grid item xs={9}>
+          {
+            value.map((elem) => {
+              return (<Grid item xs={12} key={elem}>{elem}</Grid>)
+            })
+          }
         </Grid>
-      </Grid>
+      </>
     )
   }
 
@@ -49,11 +50,17 @@ const CardNameValuePairBrief = ({ name, value, on_click, is_vertical }) => {
     value = '[' + value.join(', ') + ']'
   }
 
+  if (typeof (value) === 'boolean') {
+    value = value ? 'Y' : 'N'
+  }
+
   return (
-    <Grid item xs={12} >
-      <Grid container>
-        <CardNameValuePairHeading name={name} value={value} on_click={on_click} />
-        <Grid item xs={10}>{value}</Grid>
+    <Grid container>
+      <CardNameValuePairHeading name={name} on_click={on_click} />
+      <Grid item xs={9}>
+        <Typography style={{ whiteSpace: 'pre-line' }} align='justify' variant='body1'>
+          {value}
+        </Typography>
       </Grid>
     </Grid>
   )
@@ -61,9 +68,13 @@ const CardNameValuePairBrief = ({ name, value, on_click, is_vertical }) => {
 
 CardNameValuePairBrief.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.number])),
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.number])
+  ]).isRequired,
   on_click: PropTypes.func,
-  is_vertical: PropTypes.bool.isRequired
+  is_vertical: PropTypes.bool,
+  testing: PropTypes.any
 }
 
 const CardNameValuePairDetailed = ({ name, value, on_click, card_type, elem_props }) => {
@@ -72,21 +83,24 @@ const CardNameValuePairDetailed = ({ name, value, on_click, card_type, elem_prop
   }
 
   return (
-    <Grid container spacing={1}>
-      <CardNameValuePairHeading name={name} value={value} on_click={() => { on_click(name, value) }} />
-      <Grid item xs={10}>
+    <>
+      <CardNameValuePairHeading name={name} on_click={on_click} />
+      <Grid item xs={9}>
         <CardList card_type={card_type} elem_props={elem_props} />
       </Grid>
-    </Grid>
+    </>
   )
 }
 
 CardNameValuePairDetailed.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
   on_click: PropTypes.func,
   card_type: PropTypes.elementType.isRequired,
-  elem_props: PropTypes.object.isRequired
+  elem_props: PropTypes.PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.object
+  ]).isRequired
 }
 
 const CardNameValuePairDynamic = ({ name, value, card_type, elem_props, is_clicked, on_click, is_vertical }) => {
@@ -105,10 +119,13 @@ const CardNameValuePairDynamic = ({ name, value, card_type, elem_props, is_click
 
 CardNameValuePairDynamic.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.arrayOf(PropTypes.any).isRequired,
   card_type: PropTypes.elementType.isRequired,
-  elem_props: PropTypes.object.isRequired,
-  is_vertical: PropTypes.bool.isRequired,
+  elem_props: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.object
+  ]).isRequired,
+  is_vertical: PropTypes.bool,
   is_clicked: PropTypes.func,
   on_click: PropTypes.func
 }
@@ -137,11 +154,7 @@ const CardList = ({ card_type, elem_props }) => {
   return (
     <Grid container spacing={2}> {
       elem_props.map((elem) => {
-        return (
-          <Grid item xs={12} key={elem.name}>
-            {card_type(elem)}
-          </Grid>
-        )
+        return (<Grid item xs={12} key={elem.name}> {card_type(elem)} </Grid>)
       })
     } </Grid>
   )
@@ -149,7 +162,10 @@ const CardList = ({ card_type, elem_props }) => {
 
 CardList.propTypes = {
   card_type: PropTypes.elementType.isRequired,
-  elem_props: PropTypes.object.isRequired
+  elem_props: PropTypes.PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.object
+  ]).isRequired
 }
 
 export {

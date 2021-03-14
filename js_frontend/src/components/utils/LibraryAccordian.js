@@ -22,7 +22,7 @@ const LibAccordianDetail = ({ display_object, elements }) => {
   return (
     <AccordionDetails>
       <Grid container spacing={2}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Divider />
         </Grid>
         {
@@ -41,7 +41,7 @@ const LibAccordianDetail = ({ display_object, elements }) => {
 
 const LibraryAccordian = ({ name, display_object, elements }) => {
   return (
-    <Grid xs={12} >
+    <Grid item xs={12} >
       <Accordion>
         <LibAccordianSummary name={name} />
         <LibAccordianDetail display_object={display_object} elements={elements} />

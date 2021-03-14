@@ -38,7 +38,7 @@ class LocationClimate(JsonEnum):
 @dataclasses.dataclass(frozen=True)
 class Location(DataClassBase):
     name: str
-    description: str
+    desc: str
     loc_type: LocationType
     races: FrozenSet[str]
     population: int
@@ -50,7 +50,7 @@ class Location(DataClassBase):
     @staticmethod
     def from_json(j: Dict) -> Location:
         return Location(name=j['name'],
-                        description=j['description'],
+                        desc=j['desc'],
                         loc_type=LocationType[j['loc_type'].upper()],
                         races=j['races'],
                         population=j['population'],

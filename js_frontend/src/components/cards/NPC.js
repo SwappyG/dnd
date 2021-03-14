@@ -25,7 +25,7 @@ const NPC = ({ name, gender, age, race, location, status, background, defining_m
           <CardNameValuePairBrief name='affiliations' value={affiliations} />
           <CardDivider light />
           <CardNameValuePairBrief name='background' value={background} />
-          <CardNameValuePairBrief name='defining_moments' value={defining_moments} is_vertical={true} />
+          <CardNameValuePairBrief name='defining_moments' value={defining_moments} is_vertical />
         </Grid>
       </CardContent>
     </Card >

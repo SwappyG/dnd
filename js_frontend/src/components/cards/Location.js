@@ -23,7 +23,7 @@ const Location = ({ name, loc_type, country, population, climate, status, leader
           <CardNameValuePairBrief name='climate' value={climate} />
           <CardNameValuePairBrief name='status' value={status} />
           <CardNameValuePairBrief name='leader' value={leader} />
-          <CardNameValuePairBrief name='races' value={races} is_vertical={true} />
+          <CardNameValuePairBrief name='races' value={races} is_vertical />
           <CardDivider light />
           <CardNameValuePairBrief name='desc' value={desc} />
         </Grid>

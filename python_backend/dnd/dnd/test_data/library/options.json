@@ -120,35 +120,6 @@
             "1"
         ]
     },
-    "Dealer's Expertise": {
-        "name": "Dealer's Expertise",
-        "desc": "Extra Skills",
-        "features": [
-            "Animal Handling",
-            "History",
-            "Nature",
-            "Arcana",
-            "Persuasion",
-            "Perception",
-            "Sleight of Hand",
-            "Insight",
-            "Athletics",
-            "Survival",
-            "Religion",
-            "Acrobatics",
-            "Deception",
-            "Stealth",
-            "Medicine",
-            "Investigation",
-            "Performance",
-            "Intimidation"
-        ],
-        "prereq_features": [],
-        "unlock_levels": [
-            "7",
-            "7"
-        ]
-    },
     "MetaMagic": {
         "name": "MetaMagic",
         "desc": "You gain the ability to twist your spells to suit your needs",

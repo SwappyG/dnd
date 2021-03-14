@@ -27,8 +27,8 @@ const FeatureStatic = ({ name, unlock_level, effects, prereq_features, desc }) =
         <Grid container spacing={1}>
           <CardHeading name={name} />
           <CardNameValuePairBrief name='unlock_level' value={unlock_level} />
-          <CardNameValuePairBrief name='effects' value={effects} is_vertical={true} />
-          <CardNameValuePairBrief name='prereq_features' value={prereq_features} is_vertical={true} />
+          <CardNameValuePairBrief name='effects' value={effects} is_vertical />
+          <CardNameValuePairBrief name='prereq_features' value={prereq_features} is_vertical />
           <CardDivider light />
           <CardDescription desc={desc} />
         </Grid>
@@ -72,15 +72,13 @@ const Feature = ({ name, effects, prereq_features, unlock_level, desc }) => {
       <CardContent>
         <Grid container spacing={1}>
           <CardHeading name={name} />
-          <CardNameValuePairBrief name='unlock_level' value={unlock_level} is_vertical={false} />
+          <CardNameValuePairBrief name='unlock_level' value={unlock_level} />
           <CardNameValuePairDynamic
-            name='effects' value={effects} card_type={Effect} elem_props={effects_props}
-            is_vertical={true}
+            name='effects' value={effects} card_type={Effect} elem_props={effects_props} is_vertical
             is_clicked={() => { return state.is_effects_clicked }}
             on_click={() => { setState({ ...state, is_effects_clicked: !state.is_effects_clicked }) }} />
           <CardNameValuePairDynamic
-            name='prereq_features' value={prereq_features} card_type={FeatureStatic} elem_props={prereq_features_props}
-            is_vertical={true}
+            name='prereq_features' value={prereq_features} card_type={FeatureStatic} elem_props={prereq_features_props} is_vertical
             is_clicked={() => { return state.is_prereq_features_clicked }}
             on_click={() => { setState({ ...state, is_prereq_features_clicked: !state.is_prereq_features_clicked }) }} />
           <CardDivider light />
