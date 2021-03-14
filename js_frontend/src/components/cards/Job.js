@@ -66,4 +66,6 @@ export const JobProp = {
 
 Job.propTypes = JobProp
 
-export default Job
+export {
+  Job
+}
