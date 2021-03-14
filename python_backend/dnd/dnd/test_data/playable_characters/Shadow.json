@@ -1,0 +1,43 @@
+{
+  "name": "Shadow",
+  "max_hp": 39,
+  "hp": 39,
+  "ac": 15,
+	"level": 9,
+  "stats": {
+    "STR": 10,
+    "DEX": 10,
+    "CON": 10,
+    "INT": 10,
+    "WIS": 10,
+    "CHR": 10 
+  },
+  "proficiency": {
+    "athletics": 0,
+    "acrobatics": 0,
+    "animal_handling": 0,
+    "arcana": 0,
+    "deception": 0,
+    "history": 0,
+    "insight": 0,
+    "intimidation": 0,
+    "investigation": 0,
+    "medicine": 0,
+    "nature": 0,
+    "perception": 0,
+    "performance": 0,
+    "persuasion": 0,
+    "religion": 0,
+    "sleight_of_hand": 0,
+    "stealth": 0,
+    "survival": 0
+  },
+  "weapons": { 
+    "0" : { "qty": "1" }
+  },
+  "items": {
+    "0" : { "qty": "1" }
+  },
+  "spells": [],
+	"spell_slots": {}
+}

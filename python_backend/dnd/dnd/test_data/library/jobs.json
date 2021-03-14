@@ -1,0 +1,28 @@
+{
+    "Card Dealer": {
+        "name": "Card Dealer",
+        "desc": "The Card Dealer is a master of deceptive combat. Through nothing more than the use of a simple deck of cards and a set of dice, they may easily disrupt the flow of combat to their favor, and destroy their enemies.",
+        "features": [
+            "Spell Thief",
+            "Gambler's Intuition",
+            "Fast Hands",
+            "Casino Combat",
+            "Unarmored Defense",
+            "Elusive",
+            "Swashbuckler Style",
+            "Stacking the Deck",
+            "Combat Expertise",
+            "Dealer's Determination",
+            "Combat Quickness"
+        ],
+        "options": [
+            "Dealer's Proficiency",
+            "Tricked Deck",
+            "Arcane Cards",
+            "Dealer's Expertise",
+            "Dealer's Archetype",
+            "Dealer's Cantrips",
+            "Dealer's Gambit"
+        ]
+    }
+}

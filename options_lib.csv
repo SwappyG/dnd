@@ -1,8 +1,0 @@
-Name|Prereq Features|Features|Unlock Levels|Description
-Dealer's Gambit|None|Bad Beat;Flourish;Dancing Cards;Deck Turnover;Magic Fold;Rogue Ace;Lucky Throw;Mucked Deck;The House Always Wins;Trick Shot|1;1;1;3;6;10;14;18|Gambit is not only your profession but also your style of life. You have a certain number of Gambit Dice that represent your wits and resolves that you can utilize to overcome a tight situation.
-Tricked Deck|None|Flaming Spades;Charmed Hearts;Poisoned Clubs;Sharpened Diamonds;Stunned Stars|2;9|Whenever you make a new set of combat cards you can expend 1 gambit die to add a trick effect to your deck of combat cards. You may choose 1 effect from the list below to apply to your deck of combat cards. You may not have more than 1 tricked deck at a time. When a deck is tricked your combat cards count as magical for the purpose of overcoming resistance and immunity to non-magical attacks and damage
-Dealer's Archetype|None|Arcane Ace;Master of Cards|3|A Sub specialization for the Card Dealer class
-Arcane Cards|Arcane Ace|Burned Card;Cold Deck;Deadman's Hand;Payday;Escapist;Offsuits;Tinted Hand|3;3;3;6;10;14;18|Modifies the deck with magic for added effects from thrown cards
-Dealer's Cantrips|Arcane Ace|Friends;Gust;Minor Illusion;Message;Prestidigitation|3;3;3;10|Basic magic skills
-Dealer's Proficiency|None|Acrobatics;Deception;History;Insight;Performance;Persuasion;Sleight of Hand;Stealth|1;1;1;1|Available Skills
-Dealer's Expertise|None|Athletics;Acrobatics;Sleight of Hand;Stealth;Arcana;History;Investigation;Nature;Religion;Animal Handling;Insight;Medicine;Perception;Survival;Deception;Intimidation;Performance;Persuasion|7;7|Extra Skills
