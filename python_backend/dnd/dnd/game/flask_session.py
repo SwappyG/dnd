@@ -5,6 +5,7 @@ from pathlib import Path
 from dnd.game.runtime_library import RuntimeLibrary
 from dnd.game.player import PlayerData
 from dnd.game.session import Session
+from dnd.utils.importer import load_test_data
 from typing import Dict, List
 
 from flask import Flask, render_template, request, jsonify
@@ -41,5 +42,6 @@ class FlaskSession:
 
 
 if __name__ == "__main__":
-    app = FlaskSession(Session.from_save_file(Path(os.path.dirname(__file__)).parent / 'test_data'/ 'savefile_3.zip'))
+    lib, players = load_test_data()
+    app = FlaskSession(Session(lib=RuntimeLibrary(lib), players_list=players))
     app.run()
