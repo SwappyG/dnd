@@ -30,7 +30,7 @@ CardNameValuePairHeading.propTypes = {
   on_click: PropTypes.func
 }
 
-const CardNameValuePairBrief = ({ name, value, on_click, is_vertical, testing }) => {
+const CardNameValuePairBrief = ({ name, value, on_click, is_vertical }) => {
   if (is_vertical) {
     return (
       <>
@@ -58,7 +58,7 @@ const CardNameValuePairBrief = ({ name, value, on_click, is_vertical, testing })
     <Grid container>
       <CardNameValuePairHeading name={name} on_click={on_click} />
       <Grid item xs={9}>
-        <Typography style={{ whiteSpace: 'pre-line' }} align='justify' variant='body1'>
+        <Typography style={{ whiteSpace: 'pre-line' }} component='div' align='justify' variant='body1'>
           {value}
         </Typography>
       </Grid>
@@ -73,8 +73,7 @@ CardNameValuePairBrief.propTypes = {
     PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.number])
   ]).isRequired,
   on_click: PropTypes.func,
-  is_vertical: PropTypes.bool,
-  testing: PropTypes.any
+  is_vertical: PropTypes.bool
 }
 
 const CardNameValuePairDetailed = ({ name, value, on_click, card_type, elem_props }) => {

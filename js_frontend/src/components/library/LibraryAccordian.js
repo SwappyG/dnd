@@ -42,7 +42,7 @@ const LibAccordianDetail = ({ display_object, elements }) => {
 const LibraryAccordian = ({ name, display_object, elements }) => {
   return (
     <Grid item xs={12} >
-      <Accordion>
+      <Accordion TransitionProps={{ mountOnEnter: true }}>
         <LibAccordianSummary name={name} />
         <LibAccordianDetail display_object={display_object} elements={elements} />
       </Accordion>
@@ -67,7 +67,6 @@ LibraryAccordian.propTypes = {
 
 export {
   LibAccordianDetail,
-  LibAccordianSummary
+  LibAccordianSummary,
+  LibraryAccordian
 }
-
-export default LibraryAccordian

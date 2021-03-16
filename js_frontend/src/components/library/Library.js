@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Grid } from '@material-ui/core'
-import LibraryAccordian from 'components/utils/LibraryAccordian'
+import { LibraryAccordian } from 'components/library/LibraryAccordian'
+import { LibraryUpdater } from 'components/library/LibraryUpdater'
 
 import { Effect } from 'components/cards/Effect'
 import { Feature } from 'components/cards/Feature'
@@ -12,9 +13,9 @@ import { Location } from 'components/cards/Location'
 import { Weapon } from 'components/cards/Weapon'
 import { Item } from 'components/cards/Item'
 import { Armor } from 'components/cards/Armor'
-import { LibraryUpdater } from 'components/utils/LibraryUpdater'
+import { Character } from 'components/cards/Character'
 
-const LibraryPage = () => {
+const Library = () => {
   const { effects } = useSelector((state) => { return state.effects_slice })
   const { features } = useSelector((state) => { return state.features_slice })
   const { jobs } = useSelector((state) => { return state.jobs_slice })
@@ -22,6 +23,7 @@ const LibraryPage = () => {
   const { npcs } = useSelector((state) => { return state.npcs_slice })
   const { locations } = useSelector((state) => { return state.locations_slice })
   const { items } = useSelector((state) => { return state.items_slice })
+  const { characters } = useSelector((state) => { return state.characters_slice })
 
   const weapons = items.filter((elem) => { return elem.item_type === 'WEAPON' })
   const armor = items.filter((elem) => { return elem.item_type === 'ARMOR' })
@@ -32,6 +34,7 @@ const LibraryPage = () => {
       <Grid item xs={2} />
       <Grid item xs={8}>
         <Grid container spacing={2}>
+          <LibraryAccordian name='Characters' display_object={Character} elements={characters} />
           <LibraryAccordian name='Effects' display_object={Effect} elements={effects} />
           <LibraryAccordian name='Features' display_object={Feature} elements={features} />
           <LibraryAccordian name='Options' display_object={Option} elements={options} />
@@ -44,9 +47,10 @@ const LibraryPage = () => {
         </Grid >
       </Grid>
       <Grid item xs={2} />
-      <LibraryUpdater address='localhost' port={8080} />
     </Grid>
   )
 }
 
-export default LibraryPage
+export {
+  Library
+}

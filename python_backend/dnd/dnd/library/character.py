@@ -2,6 +2,7 @@ from __future__ import annotations
 from dnd.library.ability_score import AbilityScore, Skills
 from dnd.library.alignment import Alignment
 from dnd.utils.dataclass_types import DataClassBase
+from dnd.utils.json_types import JsonFrozenSet
 from typing import FrozenSet, Dict, Any, Tuple
 import dataclasses
 
@@ -9,6 +10,7 @@ import dataclasses
 @dataclasses.dataclass(frozen=True)
 class Character(DataClassBase):
     name: str
+    bio: str
     job: str
     age: int
     gender: str
@@ -63,6 +65,7 @@ class Character(DataClassBase):
     @staticmethod
     def from_json(j: Dict) -> Character:
         return Character(name=j['name'],
+                         bio=j['bio'],
                          job=j['job'],
                          age=j['age'],
                          gender=j['gender'],
@@ -73,9 +76,9 @@ class Character(DataClassBase):
                          skill_proficiency=Character._parse_skills_proficiency(j['skill_proficiency']),
                          max_hp=j['max_hp'],
                          hit_die=j['hit_die'],
-                         learned_features=frozenset([] if j['learned_features'] is None else j['learned_features']),
-                         learned_spells=frozenset([] if j['learned_spells'] is None else j['learned_spells']),
-                         spell_slots=tuple(j['spell_slots']))
+                         learned_features=JsonFrozenSet([] if j['learned_features'] is None else j['learned_features']),
+                         learned_spells=JsonFrozenSet([] if j['learned_spells'] is None else j['learned_spells']),
+                         spell_slots=tuple([] if j['spell_slots'] is None else j['spell_slots']))
 
 
 # @dataclasses.dataclass(frozen=True)
