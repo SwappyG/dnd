@@ -295,7 +295,7 @@ Tags
 
 URL
 ---
-${this.ost[args.name].url}`
+<${this.ost[args.name].url}>`
     console.log(ret)
     msg.reply(ret)
   }
