@@ -57,46 +57,46 @@ class DiscordClient {
       ------------------
 
       Play a song from url
-        ?play --url <some url>
+        \`?play --url <some url>\`
       
       Play a song from OST
-        ?play --name <song name>
+        \`?play --name <song name>\`
       
       Stop current song (if any)
-        ?stop
+        \`?stop\`
 
       List all songs
-        ?list
+        \`?list\`
       
       List songs with given tags (enter 1 or more, comma separated)
-        ?list --tags heles,ace,hype
+        \`?list --tags heles,ace,hype\`
 
       Detailed Song Info
-        ?song_info --name <song name>
+        \`?song_info --name <song name>\`
 
       List all tags being used
-        ?tags
+        \`?tags\`
       
       Add a new song
-        ?add_song --name <song name> --url <url> --tags heles,ace,hype  
+        \`?add_song --name <song name> --url <url> --tags heles,ace,hype\`  
       
       Remove a song
-        ?remove_song --name <song name>
+        \`?remove_song --name <song name>\`
 
       Change song url
-        ?edit_song --name <song name> --change_url <new url>
+        \`?edit_song --name <song name> --change_url <new url>\`
 
       Change song name
-        ?edit_song --name <current name> --change_name <new name>
+        \`?edit_song --name <current name> --change_name <new name>\`
 
       Add tag to song
-        ?edit_song --name <song name> --add_tag <new tag>
+        \`?edit_song --name <song name> --add_tag <new tag>\`
 
       Remove tag from song
-        ?edit_song --name <song name> --remove_tag <tag to remove>
+        \`?edit_song --name <song name> --remove_tag <tag to remove>\`
 
       Save the current OST to disk
-        ?save_ost
+        \`?save_ost\`
       `
     )
   }
@@ -380,7 +380,8 @@ class DiscordClient {
       }
 			
 			const args = minimist(parseArgsStringToArgv(trimmed_msg.slice(1)), )
-      console.log(`\nReceived msg from: [${msg.guild}: ${msg.channel.name}]`)
+      console.log(`\nReceived msg from [${msg.member.displayName}] at [${msg.guild}: ${msg.channel.name}]`)
+      console.log(args)
       switch (args["_"][0]) {
         case "play":
           this._on_play(msg, args)
@@ -415,7 +416,6 @@ class DiscordClient {
         default:
           const err = `Command ${trimmed_msg} is invalid, try ?help for proper syntax`
           console.log(err)
-          console.log(args)
           msg.reply(err)
       }
     } catch (e) {
