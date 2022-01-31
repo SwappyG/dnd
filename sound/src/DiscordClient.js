@@ -22,26 +22,6 @@ class DiscordClient {
     this.client.login(JSON.parse(readFileSync(args.discord_token_file_path)).discord_token)
     this.voice_conn = undefined
   }
-	
-  _get_channels = async () => {
-		const guild_id = "414264829248012298"
-		const guilds = await this.client.guilds.fetch()
-    if (!guilds.cache.has(guild_id)) {
-      throw `invalid guild id: ${guild_id}`
-    }
-
-    const channels = new Map()
-    const guild = guilds.cache.get(guild_id)
-    console.log(`Looking for voice channels in ${guild.name}`)
-    guild.channels.cache.forEach((channel, id) => {
-      if (channel.type === channel_type) {
-        console.log(`  - ${channel.name}`)
-        channels.set(channel.name, channel.id)
-      }
-    })
-
-    return channels
-  }
 		
 	_on_discord_ready = () => {
     console.log(`Logged in as ${this.client.user.tag}!`)
@@ -52,47 +32,31 @@ class DiscordClient {
   }
 
   _on_help = (msg, args) => {
-    msg.reply(`
-      Available Commands
+    msg.reply(
+      `\n\nAvailable Commands
       ------------------
 
-      Play a song from url
+      Play a song from url or from OST
         \`?play --url <some url>\`
-      
-      Play a song from OST
         \`?play --name <song name>\`
       
       Stop current song (if any)
         \`?stop\`
 
-      List all songs
-        \`?list\`
-      
-      List songs with given tags (enter 1 or more, comma separated)
-        \`?list --tags heles,ace,hype\`
-
-      Detailed Song Info
-        \`?song_info --name <song name>\`
-
-      List all tags being used
+      List songs and tags
         \`?tags\`
+        \`?list\`
+        \`?list --tags heles,ace,hype\`
+        \`?song_info --name <song name>\`
       
-      Add a new song
-        \`?add_song --name <song name> --url <url> --tags heles,ace,hype\`  
-      
-      Remove a song
+      Add or remove a song
         \`?remove_song --name <song name>\`
+        \`?add_song --name <song name> --url <url> --tags heles,ace,hype\`  
 
-      Change song url
+      Edit existing song
         \`?edit_song --name <song name> --change_url <new url>\`
-
-      Change song name
         \`?edit_song --name <current name> --change_name <new name>\`
-
-      Add tag to song
         \`?edit_song --name <song name> --add_tag <new tag>\`
-
-      Remove tag from song
         \`?edit_song --name <song name> --remove_tag <tag to remove>\`
 
       Save the current OST to disk
@@ -300,7 +264,7 @@ class DiscordClient {
     }
 
     const ret = 
-      `${args.name}
+      `\n\n${args.name}
         Source
         --------
         [${this.ost[args.name].original_source}] - [${this.ost[args.name].original_name}]
@@ -361,7 +325,7 @@ class DiscordClient {
     })
   }
 	
-  _on_stop = (args) => {
+  _on_stop = () => {
     if (this.voice_conn !== undefined) {
       this.voice_conn.destroy()
       this.voice_conn = undefined
@@ -387,7 +351,7 @@ class DiscordClient {
           this._on_play(msg, args)
           break
         case "stop":
-          this._on_stop(args)
+          this._on_stop()
           break
         case "list":
           this._on_list(msg, args)
