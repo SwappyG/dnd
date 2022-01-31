@@ -338,6 +338,13 @@ URL
       return
     }
     
+    if (msg.member.voice.channel === null) {
+      const err = `You must join a voice channel before trying to play a song`
+      console.log(err)
+      msg.reply(err)
+      return
+    }
+    
     msg.member.voice.channel.join().then(connection => {
       this.voice_conn = connection.play(ytdl(url))   
     }).catch(err => {
