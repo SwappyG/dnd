@@ -1,0 +1,432 @@
+{
+  "what_lies_ahead": {
+    "original_source": "Connexion",
+    "original_name": "Shattered Connexion",
+    "tags": [
+      "tension"
+    ],
+    "url": "https://www.youtube.com/watch?v=dC8tjmCqD44"
+  },
+  "in_our_memories": {
+    "original_source": "World of Goo",
+    "original_name": "Best of Times",
+    "tags": [
+      "dispair"
+    ],
+    "url": "https://www.youtube.com/watch?v=h0tbDIsmx_c"
+  },
+  "aces_sadness": {
+    "original_source": "Naruto",
+    "original_name": "Itachi's Theme, Senya",
+    "tags": [
+      "dispair",
+      "ace"
+    ],
+    "url": "https://www.youtube.com/watch?v=6FsWwIaxMho"
+  },
+  "last_words": {
+    "original_source": "Persona 5",
+    "original_name": "Regret",
+    "tags": [
+      "dispair"
+    ],
+    "url": "https://www.youtube.com/watch?v=jX1pTIHYOY0"
+  },
+  "the_shadow_fades_away": {
+    "original_source": "Avatar: The Last Airbender",
+    "original_name": "The Last Agni Kai",
+    "tags": [
+      "dispair",
+      "shadow"
+    ],
+    "url": "https://www.youtube.com/watch?v=k_P6Xjx9Tnk"
+  },
+  "flashback": {
+    "original_source": "One Piece",
+    "original_name": "Uunan and the Storage Song",
+    "tags": [
+      "memory",
+      "grief"
+    ],
+    "url": "https://www.youtube.com/watch?v=iC9rXTkAxTY"
+  },
+  "afternoon_at_the_estate": {
+    "original_source": "Genshin Impac",
+    "original_name": "Dawn Winery",
+    "tags": [
+      "peace"
+    ],
+    "url": "https://www.youtube.com/watch?v=2hqTuMc2cW0"
+  },
+  "ends_and_beginnings": {
+    "original_source": "The Good, the Bad and the Ugly",
+    "original_name": "The Ecstacy of Gold",
+    "tags": [
+      "peace",
+      "opening"
+    ],
+    "url": "https://www.youtube.com/watch?v=PYI09PMNazw"
+  },
+  "mega_peace": {
+    "original_source": "One Piece",
+    "original_name": "Stealthy Night",
+    "tags": [
+      "peace"
+    ],
+    "url": "https://www.youtube.com/watch?v=NuA3e9clYXg"
+  },
+  "enemy_lair": {
+    "original_source": "Iconoclasts",
+    "original_name": "Indoctrination",
+    "tags": [
+      "enemy",
+      "location",
+      "dungeon"
+    ],
+    "url": "https://www.youtube.com/watch?v=k93mfwObq98"
+  },
+  "conundrum": {
+    "original_source": "Death Note",
+    "original_name": "L's Theme A",
+    "tags": [
+      "enemy",
+      "puzzle"
+    ],
+    "url": "https://www.youtube.com/watch?v=qR6dzwQahOM"
+  },
+  "evil_on_the_move": {
+    "original_source": "One Piece",
+    "original_name": "Sukasen Kaishi",
+    "tags": [
+      "enemy"
+    ],
+    "url": "https://www.youtube.com/watch?v=T0x3H1nauEA"
+  },
+  "bar_fight": {
+    "original_source": "Divinity Original Sin II",
+    "original_name": "Tavern Fight",
+    "tags": [
+      "combat"
+    ],
+    "url": "https://www.youtube.com/watch?v=uTnB-Wn0b0Q"
+  },
+  "fight": {
+    "tags": [
+      "combat"
+    ],
+    "url": "https://www.youtube.com/watch?v=Yk5PRDlD_34"
+  },
+  "the_merchant_city_state": {
+    "original_source": "One Piece",
+    "original_name": "Can't Escape, Fight!",
+    "tags": [
+      "location",
+      "heles"
+    ],
+    "url": "https://www.youtube.com/watch?v=d5MrlIKlDno"
+  },
+  "vibrant_ferrolin": {
+    "original_source": "Xenoblade Chronicles",
+    "original_name": "Mechanical Rhythm",
+    "tags": [
+      "location",
+      "ferrolin",
+      "baron"
+    ],
+    "url": "https://www.youtube.com/watch?v=r0qWyyEvdZA"
+  },
+  "rusted_ferrolin": {
+    "original_source": "Hollow Knight",
+    "original_name": "Birthplace",
+    "tags": [
+      "location",
+      "ferrolin",
+      "baron"
+    ],
+    "url": "https://www.youtube.com/watch?v=5nP0V2pQ1Os"
+  },
+  "the_baron_empire": {
+    "original_source": "God of War",
+    "original_name": "God of War",
+    "tags": [
+      "location",
+      "baron"
+    ],
+    "url": "https://www.youtube.com/watch?v=y9hh91-2iaA"
+  },
+  "desert_city": {
+    "original_source": "One Piece",
+    "original_name": "Grand Line Island Hot",
+    "tags": [
+      "location"
+    ],
+    "url": "https://www.youtube.com/watch?v=bn4jrXMaUFY"
+  },
+  "the_golden_loch": {
+    "original_source": "Genshin Impact",
+    "original_name": "Angels Share",
+    "tags": [
+      "location",
+      "heles",
+      "peace"
+    ],
+    "url": "https://www.youtube.com/watch?v=a7pjnn6nAs4"
+  },
+  "steppes_to_the_sky": {
+    "original_source": "Iconoclasts",
+    "original_name": "Preacher, Chrome's Theme",
+    "tags": [
+      "location",
+      "wilderness",
+      "dalmasca"
+    ],
+    "url": "https://www.youtube.com/watch?v=Zom7tH7yWeI"
+  },
+  "the_obelisk": {
+    "original_source": "Professor Layton and the Unwound Future",
+    "original_name": "The Mobile Fortress",
+    "tags": [
+      "location",
+      "dalmasca",
+      "macalania"
+    ],
+    "url": "https://www.youtube.com/watch?v=ehCTkparvHI"
+  },
+  "torquon_fields": {
+    "original_source": "Hollow Knight",
+    "original_name": "Kingdom's Edge",
+    "tags": [
+      "location",
+      "wilderness",
+      "macalania",
+      "dalmasca"
+    ],
+    "url": "https://www.youtube.com/watch?v=SS_7IQ_UshA"
+  },
+  "heart_of_the_archipelago": {
+    "original_source": "Sly 2",
+    "original_name": "Canadian Wilderness",
+    "tags": [
+      "location",
+      "dalmasca",
+      "macalania"
+    ],
+    "url": "https://www.youtube.com/watch?v=lEhFcVvuMX8"
+  },
+  "spire_of_tears": {
+    "original_source": "The Legend of Zelda: The Minish Cap",
+    "original_name": "Temple of Droplets",
+    "tags": [
+      "location",
+      "dalmasca",
+      "macalania",
+      "holy"
+    ],
+    "url": "https://www.youtube.com/watch?v=TVK4LkLbUYs"
+  },
+  "the_sorceress": {
+    "original_source": "Girls Frontline",
+    "original_name": "Isomer - Outside the Border",
+    "tags": [
+      "character",
+      "clarissa"
+    ],
+    "url": "https://www.youtube.com/watch?v=7WFEUkVHvp0"
+  },
+  "shadows_dishonor": {
+    "original_source": "Kill Bill",
+    "original_name": "Battle Without Honor or Humanity",
+    "tags": [
+      "character",
+      "shadow"
+    ],
+    "url": "https://www.youtube.com/watch?v=gw5vAd5icAg"
+  },
+  "2nd_in_command": {
+    "original_source": "Professor Layton vs Phoenix Wright",
+    "original_name": "Zacharias Barnham - The Sword of Labyrinthia",
+    "tags": [
+      "character",
+      "npc"
+    ],
+    "url": "https://www.youtube.com/watch?v=jfWHX3vkVxk"
+  },
+  "demise_cometh": {
+    "original_source": "Naruto",
+    "original_name": "Pain's Theme - Girei",
+    "tags": [
+      "character",
+      "npc"
+    ],
+    "url": "https://www.youtube.com/watch?v=PCfiqY05BpA"
+  },
+  "the_kind_tiefling": {
+    "original_source": "Naruto",
+    "original_name": "Sadness and Sorrow",
+    "tags": [
+      "character",
+      "raj"
+    ],
+    "url": "https://www.youtube.com/watch?v=wEWF2xh5E8s"
+  },
+  "death_card": {
+    "original_source": "Naruto",
+    "original_name": "Uchiha Madara's Theme",
+    "tags": [
+      "character",
+      "ace"
+    ],
+    "url": "https://www.youtube.com/watch?v=cJfNz8csSTk"
+  },
+  "the_mysterious_girl": {
+    "original_source": "Arknights",
+    "original_name": "Frostnova",
+    "tags": [
+      "character",
+      "npc"
+    ],
+    "url": "https://www.youtube.com/watch?v=vlQUhzCgy6E"
+  },
+  "enter_giants": {
+    "original_source": "Skyrim",
+    "original_name": "Song of the Dragonborn",
+    "tags": [
+      "character",
+      "npc"
+    ],
+    "url": "https://www.youtube.com/watch?v=UsnRQJxanVM"
+  },
+  "rudolph_dance": {
+    "original_source": "KC and the Sunshine Band",
+    "original_name": "Get Down Tonight",
+    "tags": [
+      "character",
+      "rudolph"
+    ],
+    "url": "https://www.youtube.com/watch?v=LHEsE9yN2CY"
+  },
+  "knight_of_agrabah": {
+    "original_source": "Classics",
+    "original_name": "Rudolph the Red Nosed Reindeer",
+    "tags": [
+      "character",
+      "rudolph"
+    ],
+    "url": "https://www.youtube.com/watch?v=BVewSzpa44g"
+  },
+  "rudolph_summon": {
+    "original_source": "Trans Siberian Orchestra",
+    "original_name": "Christmas in Sarajevo",
+    "tags": [
+      "character",
+      "rudolph"
+    ],
+    "url": "https://www.youtube.com/watch?v=sw0-nhQeqbc"
+  },
+  "the_merchant_minister": {
+    "original_source": "Girls Frontline",
+    "original_name": "Continuum Turbulence",
+    "tags": [
+      "character",
+      "npc"
+    ],
+    "url": "https://www.youtube.com/watch?v=SsbFyU1RGEU"
+  },
+  "up_close_and_ranged": {
+    "original_source": "Space Jam",
+    "original_name": "Let's Get Ready to Rumble",
+    "tags": [
+      "combat",
+      "wakadhaka",
+      "shadow"
+    ],
+    "url": "https://www.youtube.com/watch?v=nendMLrpI-s"
+  },
+  "turning_the_tables": {
+    "original_source": "Xenoblade 2",
+    "original_name": "Counterattack",
+    "tags": [
+      "combat"
+    ],
+    "url": "https://www.youtube.com/watch?v=aElM_uHL00E"
+  },
+  "you_say_run": {
+    "original_source": "My Hero Academia",
+    "original_name": "You Say Run",
+    "tags": [
+      "combat"
+    ],
+    "url": "https://www.youtube.com/watch?v=QwACoXnNcwg"
+  },
+  "step_up": {
+    "original_source": "One Piece",
+    "original_name": "Giganto Thor Axe",
+    "tags": [
+      "combat",
+      "hype"
+    ],
+    "url": "https://www.youtube.com/watch?v=VHHVp2JNF-Q"
+  },
+  "ancient_power": {
+    "original_source": "Persona 5",
+    "original_name": "Awakening",
+    "tags": [
+      "relic",
+      "holy"
+    ],
+    "url": "https://www.youtube.com/watch?v=cjzQXrUXuHk"
+  },
+  "evolution": {
+    "original_source": "Xenoblade 2",
+    "original_name": "The Awakening",
+    "tags": [
+      "combat",
+      "hype"
+    ],
+    "url": "https://www.youtube.com/watch?v=lQHjPOv_LwM"
+  },
+  "run_away": {
+    "original_source": "One Piece",
+    "original_name": "Run Away",
+    "tags": [
+      "combat",
+      "hype"
+    ],
+    "url": "https://www.youtube.com/watch?v=qcPqr87sSRc"
+  },
+  "benny_hill": {
+    "original_source": "Benny Hill",
+    "original_name": "Benny Hill Theme",
+    "tags": [
+      "combat",
+      "hype"
+    ],
+    "url": "https://www.youtube.com/watch?v=MK6TXMsvgQg"
+  },
+  "clash_of_ideals": {
+    "original_source": "Death Note",
+    "original_name": "Death Note Theme",
+    "tags": [
+      "combat",
+      "hype"
+    ],
+    "url": "https://www.youtube.com/watch?v=qKF4hD3cpUc"
+  },
+  "s10_opening": {
+    "original_source": "Arknights",
+    "original_name": "Pine Soot Lobby",
+    "tags": [
+      "opening"
+    ],
+    "url": "https://www.youtube.com/watch?v=NJ3IpIAX9YM"
+  },
+  "the_army_marches": {
+    "original_source": "Two Steps From Hell",
+    "original_name": "Strength of a Thousand Men",
+    "tags": [
+      "hype",
+      "combat"
+    ],
+    "url": "https://www.youtube.com/watch?v=qwJj2EpC8vg"
+  }
+}
