@@ -51,7 +51,7 @@ class DiscordClient {
       
       Add or remove a song
         \`?remove_song --name <song name>\`
-        \`?add_song --name <song name> --url <url> --tags heles,ace,hype\`  
+        \`?add_song --name <song name> --original_source <band,game,show> --original_name <orig song name> --url <url> --tags heles,ace\`  
 
       Edit existing song
         \`?edit_song --name <song name> --change_url <new url>\`
@@ -173,6 +173,20 @@ class DiscordClient {
       return
     }
 
+    if (args.original_source === undefined) {
+      const err = "The original_source arg must be provided"
+      console.log(err)
+      msg.reply(err)
+      return
+    }
+
+    if (args.original_name === undefined) {
+      const err = "The original_name must be provided"
+      console.log(err)
+      msg.reply(err)
+      return
+    }
+
     if (this.ost[args.name] !== undefined) {
       const err = `[${args.name}] is already in the OST`
       console.log(err)
@@ -199,6 +213,8 @@ class DiscordClient {
     }
 
     this.ost[args.name] = {
+      "original_source": args.original_source,
+      "original_name": args.original_name,
       "tags": tags,
       "url": args.url  
     }
