@@ -33,35 +33,35 @@ class DiscordClient {
 
   _on_help = (msg, args) => {
     msg.reply(
-      `\n\nAvailable Commands
-      ------------------
+`\n
+Available Commands
+------------------
 
-      Play a song from url or from OST
-        \`?play --url <some url>\`
-        \`?play --name <song name>\`
-      
-      Stop current song (if any)
-        \`?stop\`
+Play a song from url or from OST
+  \`?play --url <some url>\`
+  \`?play --name <song name>\`
 
-      List songs and tags
-        \`?tags\`
-        \`?list\`
-        \`?list --tags heles,ace,hype\`
-        \`?song_info --name <song name>\`
-      
-      Add or remove a song
-        \`?remove_song --name <song name>\`
-        \`?add_song --name <song name> --original_source <band,game,show> --original_name <orig song name> --url <url> --tags heles,ace\`  
+Stop current song (if any)
+  \`?stop\`
 
-      Edit existing song
-        \`?edit_song --name <song name> --change_url <new url>\`
-        \`?edit_song --name <current name> --change_name <new name>\`
-        \`?edit_song --name <song name> --add_tag <new tag>\`
-        \`?edit_song --name <song name> --remove_tag <tag to remove>\`
+List songs and tags
+  \`?tags\`
+  \`?list\`
+  \`?list --tags heles,ace,hype\`
+  \`?song_info --name <song name>\`
 
-      Save the current OST to disk
-        \`?save_ost\`
-      `
+Add or remove a song
+  \`?remove_song --name <song name>\`
+  \`?add_song --name <song name> --original_source <band,game,show> --original_name <orig song name> --url <url> --tags heles,ace\`  
+
+Edit existing song
+  \`?edit_song --name <song name> --change_url <new url>\`
+  \`?edit_song --name <current name> --change_name <new name>\`
+  \`?edit_song --name <song name> --add_tag <new tag>\`
+  \`?edit_song --name <song name> --remove_tag <tag to remove>\`
+
+Save the current OST to disk
+  \`?save_ost\``
     )
   }
 
@@ -219,7 +219,7 @@ class DiscordClient {
       "url": args.url  
     }
 
-    const ret = `Song [${args.name} added to the OST]`
+    const ret = `Song [${args.name}] from [${args.original_source}]: [${original_name}] added to the OST`
     console.log(ret)
     msg.reply(ret)
   }
@@ -280,18 +280,19 @@ class DiscordClient {
     }
 
     const ret = 
-      `\n\n${args.name}
-        Source
-        --------
-        [${this.ost[args.name].original_source}] - [${this.ost[args.name].original_name}]
+`\n
+[${args.name}]
+Source
+--------
+[${this.ost[args.name].original_source}] - [${this.ost[args.name].original_name}]
 
-        Tags
-        ----
-        [${this.ost[args.name].tags.join(", ")}]
-        
-        URL
-        ---
-        ${this.ost[args.name].url}`
+Tags
+----
+[${this.ost[args.name].tags.join(", ")}]
+
+URL
+---
+${this.ost[args.name].url}`
     console.log(ret)
     msg.reply(ret)
   }
