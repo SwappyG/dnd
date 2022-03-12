@@ -4,7 +4,17 @@ import ytdl from 'ytdl-core'
 import minimist from 'minimist';
 import { parseArgsStringToArgv } from 'string-argv'
 
+
+import { Mutex, Semaphore, withTimeout } from 'async-mutex'
+
 const _DISCORD_PREFIX = "?"
+
+const _STATE = {
+  DISCONNECTED: 'DISCONNECTED',
+  STOPPED: 'STOPPED',
+  LOADING: 'LOADING',
+  PLAYING: 'PLAYING'
+}
 
 class DiscordClient {
 	constructor(args) {
@@ -20,7 +30,35 @@ class DiscordClient {
       throw Error(`couldn't find discord token`)
     }
     this.client.login(JSON.parse(readFileSync(args.discord_token_file_path)).discord_token)
-    this.voice_conn = undefined
+    this.stream = undefined
+
+    this.queue = []
+    this.play_state = _STATE.DISCONNECTED
+
+    this.mutex = new Mutex()
+
+    this.loop = setInterval(() => {
+      this.mutex.runExclusive(() => {
+        switch (this.play_state) {
+          case _STATE.DISCONNECTED:
+            return
+          case _STATE.STOPPED:
+            const song = this.queue.shift()
+            if (song === undefined) {
+              return
+            }
+
+            this.play_state = _STATE.LOADING
+            this.stream = this._play_ytdl(song.url, this.voice_conn)
+            return
+          case _STATE.LOADING:
+            return
+          case _STATE.PLAYING:
+            return
+        }
+      })
+    }, 10)
+
   }
 		
 	_on_discord_ready = () => {
@@ -37,18 +75,30 @@ class DiscordClient {
 Available Commands
 ------------------
 
-Play a song from url or from OST
+Attach bot to Voice Channel
+  \`?connect\`
+
+Play or Queue a song from url or from OST
   \`?play --url <some url>\`
   \`?play --name <song name>\`
+  \`?queue --url <some url>\`
+  \`?queue --name <some name>\`
 
-Stop current song (if any)
+Check current queue
+  \`?queue --view\`
+
+Skip current song or stop and delete entire queue
+  \`?skip\`
   \`?stop\`
 
 List songs and tags
   \`?tags\`
   \`?list\`
   \`?list --tags heles,ace,hype\`
+
+Get information about a song or url
   \`?song_info --name <song name>\`
+  \`?link_info --url <url>\`
 
 Add or remove a song
   \`?remove_song --name <song name>\`
@@ -126,6 +176,20 @@ Save the current OST to disk
     msg.reply(ret)
   }
 
+  _on_edit_change_original_name = (msg, args) => {
+    this.ost[args.name].original_name = args.change_original_name
+    const ret = `[${args.name}] original_name changed to [${args.change_original_name}]`
+    console.log(ret)
+    msg.reply(ret)
+  }
+
+  _on_edit_change_original_source = (msg, args) => {
+    this.ost[args.name].original_source = args.change_original_source
+    const ret = `[${args.name}] original_source changed to [${args.change_original_source}]`
+    console.log(ret)
+    msg.reply(ret)
+  }
+
   _on_edit_song = (msg, args) => {
     if (args.name === undefined) {
       const err = "The name arg must be provided"
@@ -156,6 +220,64 @@ Save the current OST to disk
     if (args.change_name !== undefined) {
       this._on_edit_change_name(msg, args)
     }
+
+    if (args.change_original_name !== undefined) {
+      this._on_edit_change_original_name(msg, args)
+    }
+
+    if (args.change_original_source !== undefined) {
+      this._on_edit_change_original_source(msg, args)
+    }
+  }
+
+  _on_skip = () => {
+    this.mutex.runExclusive(() => {
+      if (this.stream !== undefined) {
+        this.stream.end()
+        this.stream = undefined
+      }
+    })
+  }
+
+  _on_queue = (msg, args) => {
+    if (args.view !== undefined) {
+      this.mutex.runExclusive(() => {
+        const ret = this.queue.reduce((accum, elem, ii) => {
+          const name = elem.args.name
+          const origin = this.ost[name]?.original_name
+          const info = (name ? name : `[${name}`) + (origin ? ` / (${origin})` : '') + ']'
+          const data = info ? info : `<${elem.url}`
+          return accum + `${ii+1}: ${data}\n`
+        }, "")
+        msg.reply(`\n\nCurrent Queue:\n${ret}`)
+      })
+      return
+    }
+
+    if (args.clear !== undefined) {
+      this.mutex.runExclusive(() => {
+        this.queue = []
+        msg.reply(`Play queue cleared`)
+      })
+      return
+    }
+
+    const url = this._parse_url_from_args(msg, args)
+    if (url == null) {
+      return
+    }
+
+    if (this.play_state === _STATE.DISCONNECTED) {
+      this._on_connect(msg, args)  
+    }
+
+    this.mutex.runExclusive(() => {
+      if (this.play_state === _STATE.DISCONNECTED) {
+        return
+      }
+      this.queue.push({'args': args, 'url': url})
+      msg.reply(`Added song to queue`)
+    })
   }
 
   _on_add_song = (msg, args) => {
@@ -210,6 +332,9 @@ Save the current OST to disk
         return
       }
       tags = args.tags.split(",")
+      if (!Array.isArray(tags)) {
+        tags = [tags]
+      }
     }
 
     this.ost[args.name] = {
@@ -219,7 +344,7 @@ Save the current OST to disk
       "url": args.url  
     }
 
-    const ret = `Song [${args.name}] from [${args.original_source}]: [${original_name}] added to the OST`
+    const ret = `Song [${args.name}] from [${args.original_source}]: [${args.original_name}] added to the OST`
     console.log(ret)
     msg.reply(ret)
   }
@@ -323,40 +448,151 @@ URL
     msg.reply(`\n\nSongs List\n------------\n${reply}`)
   }
 
-  _on_play = (msg, args) => {
+  _parse_url_from_args = (msg, args) => {
     let url = undefined
     if (args.url !== undefined) {
       url = args.url
     }	else if (args.name !== undefined) {
       if (this.ost[args.name] === undefined) {
         msg.reply(`Invalid song name: ${args.name}`)
-        return
+        return null
       }
       url = this.ost[args.name].url
     } else {
       msg.reply(`Either --url or --name must be specified, got neither`)
-      return
+      return null
     }
-    
-    if (msg.member.voice.channel === null) {
-      const err = `You must join a voice channel before trying to play a song`
+
+    if (!ytdl.validateURL(url)) {
+      const err = `the url <${url}> is invalid`
       console.log(err)
       msg.reply(err)
       return
     }
-    
-    msg.member.voice.channel.join().then(connection => {
-      this.voice_conn = connection.play(ytdl(url))   
-    }).catch(err => {
-      console.log(err)
+
+    if (args.verbose !== undefined) {
+      this._get_url_info(url)
+    }
+
+    return url
+  }
+
+  _get_url_info = (url) => {
+    ytdl.getInfo(url).then(info => {
+      console.log(`youtube video info\n`)
+      console.log(info.formats)
     })
   }
-	
-  _on_stop = () => {
-    if (this.voice_conn !== undefined) {
-      this.voice_conn.destroy()
-      this.voice_conn = undefined
+
+  _on_link_info = (msg, args) => {
+    const url = this._parse_url_from_args(msg, args)
+    if (url == null) {
+      console.log("failed to parse url")
+      return
     }
+
+    if (!ytdl.validateURL(url)) {
+      const err = `the url <${url}> is invalid`
+      console.log(err)
+      msg.reply(err)
+    }    
+
+    this._get_url_info(url)
+  }
+
+  _play_ytdl = (url, connection) => {
+    console.log(`play ytdl called`)
+    const stream = connection.play(ytdl(url, { 
+      'quality': 'highestaudio' 
+    }))
+
+    stream.on('start', () => {
+      console.log(`started playing ${url}`)
+      this.mutex.runExclusive(() => {
+        this.play_state = _STATE.PLAYING
+      })
+    })
+
+    stream.on('finish', () => {
+      console.log(`finished playing ${url}`)
+      this.mutex.runExclusive(() => {
+        this.play_state = _STATE.STOPPED
+      })
+    })
+    
+    return stream
+  }
+
+  _on_connect = (msg, args, url) => {
+    if (msg.member.voice.channel === null) {
+      const err = `You must join a voice channel before connecting`
+      console.log(err)
+      msg.reply(err)
+      return
+    }
+
+    this.mutex.runExclusive(() => {
+      if (this.play_state !== _STATE.DISCONNECTED) {
+        msg.reply('already connected')
+        return
+      }
+    })
+
+    msg.member.voice.channel.join().then((connection) => {
+      this.mutex.runExclusive(() => {
+        this.play_state = _STATE.STOPPED
+        this.voice_conn = connection
+        this.queue = []
+        this.stream = null
+        if (url !== undefined) {
+          this.queue.push({'args': args, 'url': url})
+        }
+        msg.reply('successfully connected')
+      })
+    }).catch(err => {
+      console.log("caught exception while trying to connect")
+      console.log(err)
+      this.mutex.runExclusive(() => {
+        this.play_state = _STATE.DISCONNECTED
+        this.play_state = _STATE.STOPPED
+        this.voice_conn = connection
+        this.queue = []
+        this.stream = null
+      })
+    })
+  }
+
+  _on_play = (msg, args) => {
+    const url = this._parse_url_from_args(msg, args)
+    if (url === undefined) {
+      return
+    }
+
+    if (this.play_state === _STATE.DISCONNECTED) {
+      this._on_connect(msg, args, url)
+      return
+    }
+
+    this.mutex.runExclusive(() => {
+      if (this.play_state === _STATE.DISCONNECTED) {
+        return
+      }
+
+      if (this.stream !== undefined) {
+        this.stream.end()
+        this.stream = undefined
+      }
+
+      this.play_state = _STATE.STOPPED
+      this.queue.push({'args': args, 'url': url})
+    })
+  }
+
+  _on_stop = () => {
+    this.mutex.runExclusive(() => {
+      this.queue = []
+    })
+    this._on_skip()
   }
 
 	_on_discord_message = async (msg) => {
@@ -369,16 +605,25 @@ URL
       if (trimmed_msg[0] != _DISCORD_PREFIX) {
         return
       }
-			
-			const args = minimist(parseArgsStringToArgv(trimmed_msg.slice(1)), )
+		
+			const args = minimist(parseArgsStringToArgv(trimmed_msg.slice(1)))
       console.log(`\nReceived msg from [${msg.member.displayName}] at [${msg.guild}: ${msg.channel.name}]`)
       console.log(args)
       switch (args["_"][0]) {
+        case "connect":
+          this._on_connect(msg, args)
+          break;
         case "play":
           this._on_play(msg, args)
           break
         case "stop":
           this._on_stop()
+          break
+        case "queue":
+          this._on_queue(msg, args)
+          break
+        case "skip":
+          this._on_skip()
           break
         case "list":
           this._on_list(msg, args)
@@ -388,6 +633,9 @@ URL
           break
         case "song_info":
           this._on_song_info(msg, args)
+          break
+        case "link_info":
+          this._on_link_info(msg, args)
           break
         case "help":
           this._on_help(msg, args)

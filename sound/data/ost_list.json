@@ -428,5 +428,26 @@
       "combat"
     ],
     "url": "https://www.youtube.com/watch?v=qwJj2EpC8vg"
+  },
+  "riding": {
+    "original_source": "Legend of Zelda: Ocarina of Time",
+    "original_name": "Gerudo Valley",
+    "tags": [
+      "hype",
+      "wilderness"
+    ],
+    "url": "https://www.youtube.com/watch?v=0hEYvdMoF2g"
+  },
+  "infiltrate": {
+    "original_source": "Pink Panther",
+    "original_name": "Pink Panther",
+    "tags": [],
+    "url": "https://www.youtube.com/watch?v=lp6z3s1Gig0"
+  },
+  "critical_failure": {
+    "original_source": "Astranomia",
+    "original_name": "Coffin Dance",
+    "tags": ["dispair", "tension"],
+    "url": "https://www.youtube.com/watch?v=j9V78UbdzWI"
   }
 }
