@@ -34,6 +34,7 @@ class DiscordClient {
 
     this.queue = []
     this.play_state = _STATE.DISCONNECTED
+    this.now_playing = null
 
     this.mutex = new Mutex()
 
@@ -50,6 +51,7 @@ class DiscordClient {
 
             this.play_state = _STATE.LOADING
             this.stream = this._play_ytdl(song.url, this.voice_conn)
+            this.now_playing = song
             return
           case _STATE.LOADING:
             return
@@ -239,17 +241,29 @@ Save the current OST to disk
     })
   }
 
-  _on_queue = (msg, args) => {
+  _on_queue = async (msg, args) => {
     if (args.view !== undefined) {
       this.mutex.runExclusive(() => {
-        const ret = this.queue.reduce((accum, elem, ii) => {
-          const name = elem.args.name
-          const origin = this.ost[name]?.original_name
-          const info = (name ? name : `[${name}`) + (origin ? ` / (${origin})` : '') + ']'
-          const data = info ? info : `<${elem.url}`
-          return accum + `${ii+1}: ${data}\n`
+
+        const make_row = (elem) => {
+          if (elem.args.name !== undefined) {
+            return `${elem.args.name} / (${this.ost[elem.args.name]?.original_name})\n`
+          } else {
+            return `${elem.info.videoDetails.title}\n`
+          }
+        }
+
+        let ret = `\n\n`
+        if (this.now_playing !== null) {
+          ret = ret + `Now Playing:\n`
+          ret = ret + `${make_row(this.now_playing)}`
+        }
+
+        ret = ret + `\nCurrent Queue:\n`
+        ret = ret + this.queue.reduce((accum, elem, ii) => {
+          return accum + make_row(elem)
         }, "")
-        msg.reply(`\n\nCurrent Queue:\n${ret}`)
+        msg.reply(`${ret}`)
       })
       return
     }
@@ -262,7 +276,7 @@ Save the current OST to disk
       return
     }
 
-    const url = this._parse_url_from_args(msg, args)
+    const {url, info} = await this._parse_url_from_args(msg, args)
     if (url == null) {
       return
     }
@@ -275,8 +289,10 @@ Save the current OST to disk
       if (this.play_state === _STATE.DISCONNECTED) {
         return
       }
-      this.queue.push({'args': args, 'url': url})
+      console.log(this.queue)
+      this.queue.push({'args': args, 'url': url, 'info': info})
       msg.reply(`Added song to queue`)
+      console.log(this.queue)
     })
   }
 
@@ -448,7 +464,7 @@ URL
     msg.reply(`\n\nSongs List\n------------\n${reply}`)
   }
 
-  _parse_url_from_args = (msg, args) => {
+  _parse_url_from_args = async (msg, args) => {
     let url = undefined
     if (args.url !== undefined) {
       url = args.url
@@ -470,38 +486,36 @@ URL
       return
     }
 
-    if (args.verbose !== undefined) {
-      this._get_url_info(url)
-    }
+    const info = await this._get_url_info(url)
 
-    return url
+    return {'url': url, 'info': info} 
   }
 
   _get_url_info = (url) => {
-    ytdl.getInfo(url).then(info => {
-      console.log(`youtube video info\n`)
-      console.log(info.formats)
-    })
+    return ytdl.getBasicInfo(url)
   }
 
-  _on_link_info = (msg, args) => {
-    const url = this._parse_url_from_args(msg, args)
+  _on_link_info = async (msg, args) => {
+    const {url, info} = await this._parse_url_from_args(msg, args)
     if (url == null) {
       console.log("failed to parse url")
       return
     }
 
-    if (!ytdl.validateURL(url)) {
-      const err = `the url <${url}> is invalid`
-      console.log(err)
-      msg.reply(err)
-    }    
+    console.log(info.videoDetails.title)
 
-    this._get_url_info(url)
+    const secs = info.videoDetails.lengthSeconds
+    const ret =
+      `\n\n` +
+      `title: ${info.videoDetails.title}\n` +
+      `length: ${parseInt(secs/60)}:${secs%60}\n` +
+      `url: <${url}>\n`
+
+    msg.reply(ret)
+    console.log(ret)
   }
 
   _play_ytdl = (url, connection) => {
-    console.log(`play ytdl called`)
     const stream = connection.play(ytdl(url, { 
       'quality': 'highestaudio' 
     }))
@@ -562,8 +576,8 @@ URL
     })
   }
 
-  _on_play = (msg, args) => {
-    const url = this._parse_url_from_args(msg, args)
+  _on_play = async (msg, args) => {
+    const {url, info} = await this._parse_url_from_args(msg, args)
     if (url === undefined) {
       return
     }
@@ -578,13 +592,14 @@ URL
         return
       }
 
-      if (this.stream !== undefined) {
+      if (this.stream != null) {
         this.stream.end()
         this.stream = undefined
       }
 
       this.play_state = _STATE.STOPPED
-      this.queue.push({'args': args, 'url': url})
+      this.queue = []
+      this.queue.push({'args': args, 'url': url, 'info': info})
     })
   }
 
