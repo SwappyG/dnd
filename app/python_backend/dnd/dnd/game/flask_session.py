@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from dnd.game.runtime_library import RuntimeLibrary
 from dnd.game.player import PlayerData
-from dnd.game.session import Session
+from dnd.game.game import Game
 from dnd.utils.importer import load_test_data
 from typing import Dict, List
 
@@ -14,21 +14,19 @@ import jsonpickle
 
 
 class FlaskSession:
-    _lib: RuntimeLibrary
-    _players: Dict[str, PlayerData]
+    _game: Game
 
-    def __init__(self, session: Session):
+    def __init__(self, game: Game):
         self._app = Flask(__name__)
         self._cors = CORS(self._app)
-        self._lib = session.lib
-        self._players = session.players
+        self._game = game
         self.add_commands()
 
     def run(self):
         self._app.run(host='localhost', port=8080)
 
     def _get_lib_as_list(self, lib_name: str):
-        lib = self._lib.get_lib(lib_name)
+        lib = self._game._runtime_lib.get_lib(lib_name)
         return self._app.response_class(
             response=jsonpickle.encode({'data': [e.as_dict() for e in lib]}, unpicklable=False),
             status=200,
@@ -42,6 +40,6 @@ class FlaskSession:
 
 
 if __name__ == "__main__":
-    lib, players = load_test_data()
-    app = FlaskSession(Session(lib=RuntimeLibrary(lib), players_list=players))
+    library, player_data_list = load_test_data()
+    app = FlaskSession(Game(library, player_data_list))
     app.run()

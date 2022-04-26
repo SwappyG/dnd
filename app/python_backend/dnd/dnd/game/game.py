@@ -1,6 +1,32 @@
-class Game:
-    pass
+from dnd.game.runtime_library import RuntimeLibrary
+from dnd.library.library import Library
+from dnd.game.player import PlayerData, Player
+from dnd.utils.importer import load
 
+from typing import List
+from pathlib import Path
+
+def _make_players_from_player_data(library: Library, player_data_list: List[PlayerData]):
+    players = {}
+    for player_data in player_data_list:
+        character = library.characters.get(player_data.character_name)
+        if character is None:
+            raise ValueError(f"player {player_data.name}'s character {player_data.character_name} was not found in the library")
+        players[player_data.name] = Player(character, player_data)
+    
+    return players
+
+class Game:
+    def __init__(self, library: Library, player_data_list: List[PlayerData]):
+        self._runtime_lib = RuntimeLibrary(library)
+        self._players = _make_players_from_player_data(library, player_data_list)
+
+    @staticmethod
+    def from_save_file(filepath: Path):
+        lib, p_data = load(filepath)
+        return Game(lib, p_data)
+
+    
 
 # import Importer
 # from Character import Character
