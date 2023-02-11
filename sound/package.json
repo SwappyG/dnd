@@ -10,7 +10,7 @@
     "discord.js": "^12.5.1",
     "ffmpeg-static": "^4.2.7",
     "media-recorder-js": "^2.1.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "request": "^2.88.2",
     "string-argv": "^0.3.1",
     "yargs": "^17.3.1",
