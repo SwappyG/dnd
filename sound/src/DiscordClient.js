@@ -1,4 +1,4 @@
-import { Constants, Client } from 'discord.js'
+import { Constants, Client, Intents } from 'discord.js'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import ytdl from 'ytdl-core'
 import minimist from 'minimist';
@@ -18,7 +18,7 @@ const _STATE = {
 
 class DiscordClient {
 	constructor(args) {
-    this.client = new Client()
+    this.client = new Client({intents: Intents.PRIVILEGED})
 
     this.client.on(Constants.Events.CLIENT_READY, this._on_discord_ready)
     this.client.on(Constants.Events.MESSAGE_CREATE, this._on_discord_message)
@@ -618,10 +618,11 @@ URL
 
       const trimmed_msg = msg.content.trim()
       if (trimmed_msg[0] != _DISCORD_PREFIX) {
+        console.log(`msg doesn't start with ${_DISCORD_PREFIX}`)
         return
       }
-		
-			const args = minimist(parseArgsStringToArgv(trimmed_msg.slice(1)))
+			
+      const args = minimist(parseArgsStringToArgv(trimmed_msg.slice(1)))
       console.log(`\nReceived msg from [${msg.member.displayName}] at [${msg.guild}: ${msg.channel.name}]`)
       console.log(args)
       switch (args["_"][0]) {
