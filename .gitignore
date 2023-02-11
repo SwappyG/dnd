@@ -8,3 +8,7 @@
 *.vscode
 */node_modules/*
 *.eslintrc.json
+
+**/Scripts/*
+**/Lib/site-packages/*
+pyvenv.cfg
